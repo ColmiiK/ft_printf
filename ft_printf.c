@@ -12,16 +12,53 @@
 
 #include "ft_printf.h"
 
-// int	ft_printf(char const *c, ...)
-// {
-// 	va_list x;
-// 	va_start(x, c);
-	
-// 	if (c == 'c')
-		
-// 	if ()
-// }
+int validate_type(char c, void *args)
+{
+	int i;
 
+	i = 0;
+	if (c == 'c')
+		ft_putchar((char)args);
+	else if (c == 's')
+		ft_putstr((char *)args);
+	else if (c == 'p')
+
+	else if (c == 'f')
+
+	else if (c == 'i')
+		ft_putnbr((int)args);
+	else if (c == 'u')
+
+	else if (c == 'x')
+
+	else if (c == 'X')
+
+	else if (c == '%')
+		ft_putchar('%');
+	return (i);
+}
+
+int	ft_printf(char const *input, ...)
+{
+	va_list args;
+	va_start(args, input);
+	int i;
+
+	i = 0;
+	while (input)
+	{
+		if (input[i] == '%')
+		{
+			validate_type(&input[i++], va_arg(args, void *));
+		}
+		else
+			ft_putchar(&input[i]);
+		i++;
+		
+	}
+	va_end(args);
+	return (i);
+}
 
 
 int main()

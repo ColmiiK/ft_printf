@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 13:26:33 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/20 16:24:10 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/20 21:23:52 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/20 21:23:52 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
+void ft_putstr(char *str)
+{
+	int i;
 
-int		ft_printf(char const *input, ...);
-void	ft_putchar(char c);
-void ft_putstr(char *str);
-void	ft_putnbr(int nb);
-
-#endif
+	i = 0;
+	while (str)
+	{
+		ft_putchar(&str[i]);
+		i++;
+	}
+}
