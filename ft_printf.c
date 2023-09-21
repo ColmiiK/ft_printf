@@ -18,15 +18,15 @@ int validate_type(char c, void *args)
 
 	i = 0;
 	if (c == 'c')
-		ft_putchar((char)args);
+		i += ft_putchar((char)args);
 	else if (c == 's')
-		ft_putstr((char *)args);
+		i += ft_putstr((char *)args);
 	else if (c == 'p')
 
 	else if (c == 'f')
 
 	else if (c == 'i')
-		ft_putnbr((int)args);
+		i += ft_putnbr((int)args);
 	else if (c == 'u')
 
 	else if (c == 'x')
@@ -34,7 +34,7 @@ int validate_type(char c, void *args)
 	else if (c == 'X')
 
 	else if (c == '%')
-		ft_putchar('%');
+		i += ft_putchar('%');
 	return (i);
 }
 

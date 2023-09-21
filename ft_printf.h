@@ -19,8 +19,8 @@
 # include <stdio.h>
 
 int		ft_printf(char const *input, ...);
-void	ft_putchar(char c);
-void ft_putstr(char *str);
-void	ft_putnbr(int nb);
+int	ft_putchar(char c);
+int ft_putstr(char *str);
+int	ft_putnbr(int nb);
 
 #endif
