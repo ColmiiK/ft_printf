@@ -14,13 +14,13 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
+# include "./libft/libft.h"
 
 int		ft_printf(char const *input, ...);
-int	ft_putchar(char c);
-int ft_putstr(char *str);
-int	ft_putnbr(int nb);
+int 	printf_char(char c);
+int 	print_integer(int nb);
+int 	print_string(char *str);
+int		print_unsigned(int nb);
+
 
 #endif

@@ -1,23 +1,32 @@
 NAME = libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
-FILES = 
-
-BONUS = 
+LIBFTNAME = libft.a
+LIBFTDIR = ./libft
+FILES = ft_printf.c\
+		print_char.c\
+		print_string.c\
+		print_integer.c\
+		print_unsigned.c\
 
 OBJECTS = $(FILES:.c=.o)
-BOBJECTS = ${BONUS:.c=.o}
-FLAGS = -Wall -Wextra -Werror
+
 all: $(NAME)
-$(NAME): $(OBJECTS)
+
+makelibft:
+	@make -C $(LIBFTDIR)
+	@cp $(LIBFTDIR)/$(LIBFTNAME) .
+	@mv $(LIBFTNAME) $(NAME)
+
+$(NAME): makelibft $(OBJECTS)
 	@ar rcs $(NAME) $(OBJECTS)
 $(OBJECTS): $(FILES)
-	@gcc $(FLAGS) -c $(FILES)
+	@gcc $(CFLAGS) -c $(FILES)
 clean:
 	@rm -f $(OBJECTS)
+	@cd $(LIBFTDIR) && make clean
 fclean:
 	@rm -f $(NAME) $(OBJECTS)
+	@cd $(LIBFTDIR) && make fclean
 re: fclean all
-bonus:
-	@gcc ${FLAGS} -c ${BONUS}
-	@ar rcs ${NAME} ${BOBJECTS}
-.PHONY: re all fclean clean bonus 
+
+.PHONY: re all fclean clean makelibft

@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 15:50:02 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/20 15:50:38 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/20 21:26:00 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/20 21:26:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putchar(char c)
+int print_integer(int nb)
 {
-	write (1, &c, 1);
-	return (1);
+	ft_putnbr_fd(nb, 1);
+	if (nb == -2147483648)
+		return (11);
+	return (digit_count(nb));
 }

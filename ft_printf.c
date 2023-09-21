@@ -18,46 +18,46 @@ int validate_type(char c, void *args)
 
 	i = 0;
 	if (c == 'c')
-		i += ft_putchar((char)args);
+		i += print_char((char)args);
 	else if (c == 's')
-		i += ft_putstr((char *)args);
+		i += print_string((char *)args);
 	else if (c == 'p')
 
-	else if (c == 'f')
-
+	else if (c == 'd')
+		i += print_integer((int)args);
 	else if (c == 'i')
-		i += ft_putnbr((int)args);
+		i += print_integer((int)args);
 	else if (c == 'u')
-
+		i += print_unsigned((unsigned int)args);
 	else if (c == 'x')
 
 	else if (c == 'X')
 
 	else if (c == '%')
-		i += ft_putchar('%');
+		i += print_char('%');
 	return (i);
 }
 
 int	ft_printf(char const *input, ...)
 {
 	va_list args;
-	va_start(args, input);
-	int i;
+	unsigned int i;
+	unsigned int total;
 
 	i = 0;
+	total = 0;
+	va_start(args, input);
 	while (input)
 	{
 		if (input[i] == '%')
-		{
-			validate_type(&input[i++], va_arg(args, void *));
-		}
+			total += validate_type(&input[i++], va_arg(args, void *));
 		else
-			ft_putchar(&input[i]);
+			total += print_char(&input[i]);
 		i++;
 		
 	}
 	va_end(args);
-	return (i);
+	return (total);
 }
 
 
