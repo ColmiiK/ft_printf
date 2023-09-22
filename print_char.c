@@ -6,14 +6,14 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:50:02 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 11:47:33 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:46:50 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	printf_char(char c)
+int	print_char(char c)
 {
-	ft_putchar_fd(&c, 1);
+	ft_putchar_fd(c, 1);
 	return (1);
 }

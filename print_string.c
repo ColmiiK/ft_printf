@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 21:23:52 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 11:47:43 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:47:56 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	print_string(char *str)
 {
 	if (!str)
 	{
-		ft_putsr_fd("(null)", 1);
+		ft_putstr_fd("(null)", 1);
 		return (6);
 	}
 	ft_putstr_fd(str, 1);

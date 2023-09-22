@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:27:49 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 14:38:32 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:52:22 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	validate_type(char c, void *args)
 		i += print_char((char)args);
 	else if (c == 's')
 		i += print_string((char *)args);
-	else if (c == 'p')
-		i += print_pointer((void *)args);
+	// else if (c == 'p')
+	// 	i += print_pointer(args);
 	else if (c == 'd')
 		i += print_integer((int)args);
 	else if (c == 'i')
@@ -50,9 +50,12 @@ int	ft_printf(char const *input, ...)
 	while (input)
 	{
 		if (input[i] == '%')
-			total += validate_type(&input[i++], va_arg(args, void *));
+		{
+			i++;
+			total += validate_type(input[i], va_arg(args, void *));
+		}
 		else
-			total += print_char(&input[i]);
+			total += print_char(input[i]);
 		i++;
 	}
 	va_end(args);
@@ -75,4 +78,14 @@ int	main(void)
 	printf("x: %x\n", 27);
 	printf("X: %X\n", 27);
 	printf("%%\n");
+
+	ft_printf("c: %c\n", 'a');
+	ft_printf("s: %s\n", s);
+	ft_printf("p: %p\n", ptr);
+	ft_printf("d(f): %f\n", 25.5);
+	ft_printf("i: %i\n", -27);
+	ft_printf("u: %u\n", 27);
+	ft_printf("x: %x\n", 27);
+	ft_printf("X: %X\n", 27);
+	ft_printf("%%\n");
 }
