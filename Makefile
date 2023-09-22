@@ -7,6 +7,8 @@ FILES = ft_printf.c\
 		print_string.c\
 		print_integer.c\
 		print_unsigned.c\
+		print_hex_lower.c\
+		print_hex_upper.c\
 
 OBJECTS = $(FILES:.c=.o)
 

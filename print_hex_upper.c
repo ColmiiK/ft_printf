@@ -1,46 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_unsigned.c                                   :+:      :+:    :+:   */
+/*   print_hex_upper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 14:45:30 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 11:47:49 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/22 11:56:49 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/22 14:37:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	unsigned_digit_count(unsigned int n)
+static char	*remove_zeroes_and_print(char *s)
 {
 	int	i;
 
 	i = 0;
-	if (n <= 0)
+	while (s[i] == '0' && i < 8)
 		i++;
-	while (n != 0)
-	{
-		n /= 10;
-		i++;
-	}
-	return (i);
+	ft_putstr_fd(s + i, 1);
+	return (&s[i]);
 }
 
-static void	unsigned_ft_putnbr_fd(unsigned int n, int fd)
+int	print_hex_upper(int n)
 {
-	if (n < 10)
-	{
-		ft_putchar_fd(n + 48, fd);
-		return ;
-	}
-	else
-		ft_putnbr_fd(n / 10, fd);
-	ft_putnbr_fd(n % 10, fd);
-}
+	char	*hex;
+	char	res[9];
+	int		i;
+	int		j;
 
-int	print_unsigned(unsigned int nb)
-{
-	unsigned_ft_putnbr_fd(nb, 1);
-	return (unsigned_digit_count(nb));
+	hex = "0123456789ABCDEF";
+	i = 7;
+	j = 0;
+	res[8] = 0;
+	while (j < 8)
+	{
+		res[j] = 0;
+		j++;
+	}
+	j = 0;
+	while (j < 8)
+	{
+		res[i] = hex[n & 0xF];
+		n >>= 4;
+		i--;
+		j++;
+	}
+	return (ft_strlen(remove_zeroes_and_print(res)));
 }

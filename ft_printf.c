@@ -6,15 +6,15 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:27:49 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/20 16:31:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:38:32 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int validate_type(char c, void *args)
+int	validate_type(char c, void *args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (c == 'c')
@@ -22,7 +22,7 @@ int validate_type(char c, void *args)
 	else if (c == 's')
 		i += print_string((char *)args);
 	else if (c == 'p')
-
+		i += print_pointer((void *)args);
 	else if (c == 'd')
 		i += print_integer((int)args);
 	else if (c == 'i')
@@ -30,9 +30,9 @@ int validate_type(char c, void *args)
 	else if (c == 'u')
 		i += print_unsigned((unsigned int)args);
 	else if (c == 'x')
-
+		i += print_hex_lower((int)args);
 	else if (c == 'X')
-
+		i += print_hex_upper((int)args);
 	else if (c == '%')
 		i += print_char('%');
 	return (i);
@@ -40,9 +40,9 @@ int validate_type(char c, void *args)
 
 int	ft_printf(char const *input, ...)
 {
-	va_list args;
-	unsigned int i;
-	unsigned int total;
+	va_list			args;
+	unsigned int	i;
+	unsigned int	total;
 
 	i = 0;
 	total = 0;
@@ -54,18 +54,18 @@ int	ft_printf(char const *input, ...)
 		else
 			total += print_char(&input[i]);
 		i++;
-		
 	}
 	va_end(args);
 	return (total);
 }
 
-
-int main()
+int	main(void)
 {
-	char *s = "lorem ipsum";
-	char *ptr = 0;
+	char	*s;
+	char	*ptr;
 
+	s = "lorem ipsum";
+	ptr = 0;
 	printf("c: %c\n", 'a');
 	printf("s: %s\n", s);
 	printf("p: %p\n", ptr);
