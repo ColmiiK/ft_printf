@@ -23,8 +23,8 @@ int	validate_type(char c, void *args)
 		i += print_string((char *)args);
 	// else if (c == 'p')
 	// 	i += print_pointer(args);
-	else if (c == 'd')
-		i += print_integer((int)args);
+	// else if (c == 'd')
+	// 	i += print_integer((int)args);
 	else if (c == 'i')
 		i += print_integer((int)args);
 	else if (c == 'u')
@@ -47,7 +47,7 @@ int	ft_printf(char const *input, ...)
 	i = 0;
 	total = 0;
 	va_start(args, input);
-	while (input)
+	while (input[i])
 	{
 		if (input[i] == '%')
 		{
@@ -69,23 +69,25 @@ int	main(void)
 
 	s = "lorem ipsum";
 	ptr = 0;
-	printf("c: %c\n", 'a');
-	printf("s: %s\n", s);
-	printf("p: %p\n", ptr);
-	printf("d(f): %f\n", 25.5);
-	printf("i: %i\n", -27);
-	printf("u: %u\n", 27);
-	printf("x: %x\n", 27);
-	printf("X: %X\n", 27);
-	printf("%%\n");
+	printf("\nprintf original: \n");
+	printf(" <- %%c, %i printed chars\n", printf("%c", 'a'));
+	printf(" <- %%s, %i printed chars\n", printf("%s", s));
+	printf(" <- %%p, %i printed chars\n", printf("%p", ptr));
+	printf(" <- %%f, %i printed chars\n", printf("%f", 25.5));
+	printf(" <- %%i, %i printed chars\n", printf("%i", -27));
+	printf(" <- %%u, %i printed chars\n", printf("%u", 27));
+	printf(" <- %%x, %i printed chars\n", printf("%x", 424242222));
+	printf(" <- %%X, %i printed chars\n", printf("%X", 424242222));
+	printf(" <- %%, %i printed chars\n", printf("%%"));
 
-	ft_printf("c: %c\n", 'a');
-	ft_printf("s: %s\n", s);
-	ft_printf("p: %p\n", ptr);
-	ft_printf("d(f): %f\n", 25.5);
-	ft_printf("i: %i\n", -27);
-	ft_printf("u: %u\n", 27);
-	ft_printf("x: %x\n", 27);
-	ft_printf("X: %X\n", 27);
-	ft_printf("%%\n");
+	ft_printf("\nmy ft_printf : \n");
+	ft_printf(" <- %%c, %i printed chars\n", ft_printf("%c", 'a'));
+	ft_printf(" <- %%s, %i printed chars\n", ft_printf("%s", s));
+	ft_printf(" <- %%p, %i printed chars\n", ft_printf("%p", ptr));
+	ft_printf(" <- %%f, %i printed chars\n", ft_printf("%f", 25.5));
+	ft_printf(" <- %%i, %i printed chars\n", ft_printf("%i", -27));
+	ft_printf(" <- %%u, %i printed chars\n", ft_printf("%u", 27));
+	ft_printf(" <- %%x, %i printed chars\n", ft_printf("%x", 424242222));
+	ft_printf(" <- %%X, %i printed chars\n", ft_printf("%X", 424242222));
+	ft_printf(" <- %%, %i printed chars\n", ft_printf("%%"));
 }
