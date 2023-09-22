@@ -9,6 +9,7 @@ FILES = ft_printf.c\
 		print_unsigned.c\
 		print_hex_lower.c\
 		print_hex_upper.c\
+		print_double.c\
 
 OBJECTS = $(FILES:.c=.o)
 
