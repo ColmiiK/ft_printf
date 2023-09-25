@@ -11,17 +11,14 @@ FILES = ft_printf.c\
 		aux_functions.c\
 
 OBJECTS = $(FILES:.c=.o)
-
 all: $(NAME)
-
-$(NAME): makelibft $(OBJECTS)
+$(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $(OBJECTS)
 $(OBJECTS): $(FILES)
-	@gcc $(CFLAGS) -c $(FILES)
+	@gcc $(FLAGS) -c $(FILES)
 clean:
 	@rm -f $(OBJECTS)
 fclean:
 	@rm -f $(NAME) $(OBJECTS)
 re: fclean all
-
-.PHONY: re all fclean clean makelibft
+.PHONY: re all fclean clean
