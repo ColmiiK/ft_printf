@@ -6,13 +6,13 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 21:26:00 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/25 12:06:11 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/25 12:21:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	digit_count(int n)
+int	digit_count(int n)
 {
 	int	i;
 

@@ -6,13 +6,13 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:45:30 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 15:48:35 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/25 12:21:32 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	unsigned_digit_count(unsigned int n)
+int	unsigned_digit_count(unsigned int n)
 {
 	int	i;
 

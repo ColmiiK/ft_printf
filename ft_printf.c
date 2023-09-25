@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:27:49 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/25 12:15:55 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/09/25 13:09:55 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ unsigned int	validate_type(char c, va_list args)
 	else if (c == 'u')
 		i += print_unsigned(va_arg(args, unsigned int));
 	else if (c == 'x')
-		i += print_hex_lower(va_arg(args, int));
+		i += print_hex_lower(va_arg(args, unsigned int));
 	else if (c == 'X')
-		i += print_hex_upper(va_arg(args, int));
+		i += print_hex_upper(va_arg(args, unsigned int));
 	else if (c == '%')
 		i += print_char('%');
 	return (i);
