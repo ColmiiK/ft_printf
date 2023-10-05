@@ -6,59 +6,39 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 11:56:54 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/25 12:03:31 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:59:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	print_hex_ptr(unsigned long address)
+static int	hex_long(char *base, unsigned long long n, int i)
 {
-	char	c;
-	int		total;
+	unsigned long long	len;
 
-	total = 0;
-	if (address >= 16)
+	len = ft_strlen(base);
+	if (n >= len)
 	{
-		total += print_hex_ptr(address / 16);
-		total += print_hex_ptr(address % 16);
+		i = hex_long(base, n / len, i);
+		ft_putchar_fd(base[n % len], 1);
+		i++;
 	}
-	else
+	else if (n < len)
 	{
-		c = (address % 16) + '0';
-		if ((address % 16) > 9)
-			c = ((address % 16) + 87);
-		ft_putchar_fd(c, 1);
-		total++;
+		ft_putchar_fd(base[n], 1);
+		i++;
 	}
-	return (total);
-}
-
-static int	hex_len(unsigned long address)
-{
-	int	total;
-
-	total = 0;
-	if (address >= 16)
-	{
-		total += hex_len(address / 16);
-		total += hex_len(address % 16);
-	}
-	else
-		total++;
-	return (total);
+	return (i);
 }
 
 int	print_pointer(void *ptr)
 {
-	long	address;
-	int		total;
-	int		len;
+	unsigned long long	address;
+	int					total;
 
-	address = (unsigned long)ptr;
-	total = 0;
-	len = hex_len(address) + 2;
-	total += print_string("0x");
-	total += print_hex_ptr(address);
+	address = (unsigned long long)ptr;
+	total = 1;
+	print_string("0x");
+	total += hex_long("0123456789abcdef", address, total);
 	return (total);
 }
