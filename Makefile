@@ -1,24 +1,34 @@
 NAME = libftprintf.a
-CFLAGS = -Wall -Wextra -Werror
-FILES = ft_printf.c\
-		print_char.c\
-		print_string.c\
-		print_integer.c\
-		print_unsigned.c\
-		print_hex_lower.c\
-		print_hex_upper.c\
-		print_pointer.c\
-		aux_functions.c\
+SOURCES = \
+	ft_printf.c \
+	aux_functions.c \
+	print_char.c \
+	print_hex_lower.c \
+	print_hex_upper.c \
+	print_integer.c \
+	print_pointer.c \
+	print_string.c \
+	print_unsigned.c \
+	
+OBJECTS = $(SOURCES:.c=.o)
 
-OBJECTS = $(FILES:.c=.o)
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
 all: $(NAME)
+
 $(NAME): $(OBJECTS)
-	@ar rcs $(NAME) $(OBJECTS)
-$(OBJECTS): $(FILES)
-	@gcc $(FLAGS) -c $(FILES)
+	$(AR) -r $@ $?
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $?
+
 clean:
-	@rm -f $(OBJECTS)
-fclean:
-	@rm -f $(NAME) $(OBJECTS)
+	rm -f $(OBJECTS)
+
+fclean: clean
+	rm -f $(NAME)
+
 re: fclean all
-.PHONY: re all fclean clean
+
+.PHONY: all clean fclean re
