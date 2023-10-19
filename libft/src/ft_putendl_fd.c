@@ -1,46 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_unsigned.c                                   :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 14:45:30 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/25 12:21:32 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/16 11:46:33 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/16 11:53:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	unsigned_digit_count(unsigned int n)
+void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;
 
 	i = 0;
-	if (n <= 0)
-		i++;
-	while (n != 0)
+	while (s[i])
 	{
-		n /= 10;
+		ft_putchar_fd(s[i], fd);
 		i++;
 	}
-	return (i);
-}
-
-static void	unsigned_ft_putnbr_fd(unsigned int n, int fd)
-{
-	if (n < 10)
-	{
-		ft_putchar_fd(n + 48, fd);
-		return ;
-	}
-	else
-		ft_putnbr_fd(n / 10, fd);
-	ft_putnbr_fd(n % 10, fd);
-}
-
-int	print_unsigned(unsigned int nb)
-{
-	unsigned_ft_putnbr_fd(nb, 1);
-	return (unsigned_digit_count(nb));
+	write(fd, "\n", 1);
 }

@@ -1,19 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_char.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 15:50:02 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 15:46:50 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/11 18:37:26 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/19 11:20:49 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	print_char(char c)
+char	*ft_strchr(const char *s, int c)
 {
-	ft_putchar_fd(c, 1);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (c > 255)
+		c -= 256;
+	while (s[i])
+	{
+		if (c == s[i])
+			return ((char *)&s[i]);
+		else
+			i++;
+	}
+	if (c == '\0')
+		return ((char *)&s[i++]);
+	return (0);
 }
+
+// int main()
+// {
+// 	char *s = "Hola";
+
+// 	printf("%s\n", ft_strchr(s, 'a' + 256));
+// }

@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_string.c                                     :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 21:23:52 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/22 15:47:56 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/11 11:58:15 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/11 12:08:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	print_string(char *str)
+int	ft_isdigit(int c)
 {
-	if (!str)
-	{
-		ft_putstr_fd("(null)", 1);
-		return (6);
-	}
-	ft_putstr_fd(str, 1);
-	return (ft_strlen(str));
+	if (c < 48 || c > 57)
+		return (0);
+	else
+		return (1);
 }

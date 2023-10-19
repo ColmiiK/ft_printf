@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_hex_lower.c                                  :+:      :+:    :+:   */
+/*   print_hexes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 11:56:52 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/25 13:12:41 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:29:41 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,26 @@ int	print_hex_lower(unsigned int n)
 
 	total = 0;
 	total = hex_long("0123456789abcdef", n, total);
+	return (total);
+}
+
+int	print_hex_upper(unsigned int n)
+{
+	int	total;
+
+	total = 0;
+	total = hex_long("0123456789ABCDEF", n, total);
+	return (total);
+}
+
+int	print_pointer(void *ptr)
+{
+	unsigned long long	address;
+	int					total;
+
+	address = (unsigned long long)ptr;
+	total = 1;
+	print_string("0x");
+	total += hex_long("0123456789abcdef", address, total);
 	return (total);
 }

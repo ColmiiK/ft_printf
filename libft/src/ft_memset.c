@@ -1,41 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_hex_upper.c                                  :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 11:56:49 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/09/25 13:09:26 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/11 15:43:16 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/09/11 16:35:05 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-static int	hex_long(char *base, unsigned long long n, int i)
+void	*ft_memset(void *str, int c, size_t len)
 {
-	unsigned long long	len;
+	unsigned int	i;
+	char			*temp;
 
-	len = ft_strlen(base);
-	if (n >= len)
+	i = 0;
+	temp = str;
+	while (i != len)
 	{
-		i = hex_long(base, n / len, i);
-		ft_putchar_fd(base[n % len], 1);
+		temp[i] = c;
 		i++;
 	}
-	else if (n < len)
-	{
-		ft_putchar_fd(base[n], 1);
-		i++;
-	}
-	return (i);
+	return (str);
 }
 
-int	print_hex_upper(unsigned int n)
+/*
+#include <stdio.h>
+#include <string.h>
+
+int	main(void)
 {
-	int	total;
+	char	str[20];
 
-	total = 0;
-	total = hex_long("0123456789ABCDEF", n, total);
-	return (total);
+	str[20] = "Hello World";
+	printf("%s\n", str);
+	memset(str + 3, '.', 3);
+	printf("%s", str);
 }
+*/
