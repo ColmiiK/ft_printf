@@ -1,4 +1,4 @@
-# ft_printf (alvega-g)
+# ft_printf
 
 This project consists of recoding and implementing a series of `printf` conversions, with the goal of creating your own `printf` function in C.
 
