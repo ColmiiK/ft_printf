@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:27:49 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/10/19 15:37:27 by alvega-g         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:28:29 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	ft_printf(char const *input, ...)
 	unsigned int	i;
 	unsigned int	total;
 
+	if (write(1, "", 0) == -1)
+		return (-1);
 	i = 0;
 	total = 0;
 	va_start(args, input);

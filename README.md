@@ -16,6 +16,3 @@ This function is already included in my `libft` library, you can check it out [h
 • %X
 • %%
 ```
-### Nota bene
-
-Currently, this function does not return -1 when an error occurs, unlike the proper `printf` function.
