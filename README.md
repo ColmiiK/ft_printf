@@ -8,7 +8,7 @@
         <img alt='42 (oscuro)' src='https://img.shields.io/badge/Málaga-black?style=flat&logo=42&logoColor=white'/>
     </a>
     <img src="https://img.shields.io/badge/score- 100%20%2F%20100-success?color=%2312bab9&style=flat" />
-    <img src="https://wakatime.com/badge/user/018cd069-7ab6-4658-9d62-78d9b3970dd2/project/018cd073-0acf-4efc-a0c5-b1890ca6054a.svg" alt="Tiempo" />
+    <img src="https://wakatime.com/badge/user/018cd069-7ab6-4658-9d62-78d9b3970dd2/project/018cd092-90ed-44a8-ba1f-05ea0d64e74a.svg" alt="Tiempo" />
 </div>
 
 ---
