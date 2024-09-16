@@ -1,6 +1,4 @@
 #include "../include/ft_printf.h"
-#include <unistd.h>
-
 
 	/*
 	 *
@@ -36,26 +34,50 @@ void ft_constructor(t_format *tab)
 	tab->space = 0;
 	tab->total = 0;
 }
-// cspdiuxX%
 bool	ft_is_conversion(char c)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' || c == '%')
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' || c == '%' || c == '#')
 		return (true);
 	return (false);
 }
 
-void ft_alternate_conversion(t_format *tab, const char *input)
+// oxXeEfgG
+void ft_alternate_conversion(t_format *tab, char c)
 {
-	
+	if (c == 'o')
+		tab->total += ft_print_number(va_arg(tab->arg, int), "01234567");
+	else if (c == 'x' || c == 'X')
+		tab->total += ft_print_number(va_arg(tab->arg, long), "0123456789abcdef");
+	else if (c == 'e' || c == 'E')
+		tab->total += ft_print_float(va_arg(tab->arg, int));
+	else if (c == 'f')
+		tab->total += ft_print_float(va_arg(tab->arg, int));
+	else if (c == 'g' || c == 'G')
+		tab->total += ft_print_float(va_arg(tab->arg, int));
 }
 
-void ft_conversion(t_format *tab, const char *input)
+// cspdiuxX%
+void ft_conversion(t_format *tab, char c)
 {
-
+	if (c == 'c')
+		tab->total += ft_print_char(va_arg(tab->arg, int));
+	else if (c == 's')
+		tab->total += ft_print_string(va_arg(tab->arg, char *));
+	else if (c == 'd' || c == 'i')
+		tab->total += ft_print_number(va_arg(tab->arg, int), "0123456789");
+	else if (c == 'u')
+		tab->total += ft_print_unsigned_number(va_arg(tab->arg, int), "0123456789");
+	else if (c == 'x' || c == 'X')
+		tab->total += ft_print_number(va_arg(tab->arg, long), "0123456789abcdef");
+	else if (c == 'p')
+		tab->total += ft_print_number(va_arg(tab->arg, long), "0123456789abcdef");
+	else if (c == '%')
+		tab->total += ft_print_char('%');
 }
 
-void	ft_evaluate(t_format *tab, const char* input)
+int	ft_evaluate(t_format *tab, const char* input)
 {
+	input++;
 	while (!ft_is_conversion(*input))
 	{
 		if (*input == '-')
@@ -87,9 +109,9 @@ void	ft_evaluate(t_format *tab, const char* input)
 		}
 	}
 	if (*input == '#')
-		ft_alternate_conversion(tab, input);
+		return (ft_alternate_conversion(tab, *(++input)), 2);
 	else
-		ft_conversion(tab, input);
+		return (ft_conversion(tab, *input), 1);
 }
 
 int	ft_printf(const char *input, ...)
@@ -98,10 +120,10 @@ int	ft_printf(const char *input, ...)
 
 	ft_constructor(&tab);
 	va_start(tab.arg, input);
-	while (input)
+	while (*input)
 	{
 		if (*input == '%')
-			ft_evaluate(&tab, ++input);
+			input += ft_evaluate(&tab, input);
 		else
 			tab.total += write(STDOUT_FILENO, input, 1);
 		input++;
