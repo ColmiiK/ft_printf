@@ -20,6 +20,21 @@
 	 *
 	 * */
 
+
+void print_everything(t_format *tab) {
+	printf("\nwidth: \t\t%d\n", tab->width);
+	printf("precision: \t%d\n", tab->precision);
+	printf("padding: \t%d\n", tab->padding);
+	printf("point: \t\t%d\n", tab->point);
+	printf("dash: \t\t%d\n", tab->dash);
+	printf("length: \t%d\n", tab->length);
+	printf("sign: \t\t%d\n", tab->sign);
+	printf("is zero: \t%d\n", tab->is_zero);
+	printf("percentage: \t%d\n", tab->percentage);
+	printf("space: \t\t%d\n", tab->space);
+	printf("total: \t\t%d\n\n", tab->total);
+}
+
 void ft_constructor(t_format *tab)
 {
 	tab->width = 0;
@@ -45,34 +60,34 @@ bool	ft_is_conversion(char c)
 void ft_alternate_conversion(t_format *tab, char c)
 {
 	if (c == 'o')
-		tab->total += ft_print_number(va_arg(tab->arg, int), "01234567");
+		ft_resolve_number(tab, "01234567");
 	else if (c == 'x' || c == 'X')
-		tab->total += ft_print_number(va_arg(tab->arg, long), "0123456789abcdef");
+		ft_resolve_number(tab, "0123456789abcdef");
 	else if (c == 'e' || c == 'E')
-		tab->total += ft_print_float(va_arg(tab->arg, int));
+		ft_resolve_float(tab);
 	else if (c == 'f')
-		tab->total += ft_print_float(va_arg(tab->arg, int));
+		ft_resolve_float(tab);
 	else if (c == 'g' || c == 'G')
-		tab->total += ft_print_float(va_arg(tab->arg, int));
+		ft_resolve_float(tab);
 }
 
 // cspdiuxX%
 void ft_conversion(t_format *tab, char c)
 {
 	if (c == 'c')
-		tab->total += ft_print_char(va_arg(tab->arg, int));
+		ft_resolve_char(tab);
 	else if (c == 's')
-		tab->total += ft_print_string(va_arg(tab->arg, char *));
+		ft_resolve_string(tab);
 	else if (c == 'd' || c == 'i')
-		tab->total += ft_print_number(va_arg(tab->arg, int), "0123456789");
+		ft_resolve_number(tab, "0123456789");
 	else if (c == 'u')
-		tab->total += ft_print_unsigned_number(va_arg(tab->arg, int), "0123456789");
+		ft_resolve_unsigned_number(tab, "0123456789");
 	else if (c == 'x' || c == 'X')
-		tab->total += ft_print_number(va_arg(tab->arg, long), "0123456789abcdef");
+		ft_resolve_number(tab, "0123456789abcdef");
 	else if (c == 'p')
-		tab->total += ft_print_number(va_arg(tab->arg, long), "0123456789abcdef");
+		ft_resolve_number(tab, "0123456789abcdef");
 	else if (c == '%')
-		tab->total += ft_print_char('%');
+		ft_resolve_char(tab);
 }
 
 int	ft_evaluate(t_format *tab, const char* input)
@@ -93,6 +108,7 @@ int	ft_evaluate(t_format *tab, const char* input)
 		}
 		if (*input == '.')
 		{
+			input++;
 			tab->precision = ft_atoi(input);
 			while (ft_isdigit(*input))
 				input++;
@@ -108,6 +124,7 @@ int	ft_evaluate(t_format *tab, const char* input)
 			input++;
 		}
 	}
+	print_everything(tab);
 	if (*input == '#')
 		return (ft_alternate_conversion(tab, *(++input)), 2);
 	else

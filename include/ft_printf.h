@@ -20,11 +20,11 @@ typedef struct s_format
 }	t_format;
 
 int		ft_printf(const char *input, ...);
-int		ft_print_char(char c);
-int		ft_print_string(char *str);
-int		ft_print_number(long n, char *base);
-int		ft_print_unsigned_number(unsigned long n, char *base);
-int		ft_print_float(int n);
+void	ft_resolve_char(t_format *tab);
+void	ft_resolve_string(t_format *tab);
+void	ft_resolve_number(t_format *tab, char *base);
+void	ft_resolve_unsigned_number(t_format *tab, char *base);
+void	ft_resolve_float(t_format *tab);
 
 
 #endif

@@ -2,8 +2,7 @@
 
 // make && gcc main.c -L. -lftprintf -Llib/libft -lft && ./a.out
 
-int main(){
-
-	int total = ft_printf("%#o\n", 42);
-	ft_printf("Total is %d\n", total);
+int main(){	
+	printf("%10d\n", 42);
+	int total = ft_printf("%10d\n", 42);
 }
