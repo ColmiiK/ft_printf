@@ -21,8 +21,9 @@
 	 * */
 
 
-void print_everything(t_format *tab) {
-	printf("\nwidth: \t\t%d\n", tab->width);
+void print_everything(t_format *tab, const char *input) {
+	printf("\nCurrent input is: ->%s<-\n", input);
+	printf("width: \t\t%d\n", tab->width);
 	printf("precision: \t%d\n", tab->precision);
 	printf("padding: \t%d\n", tab->padding);
 	printf("point: \t\t%d\n", tab->point);
@@ -90,60 +91,62 @@ void ft_conversion(t_format *tab, char c)
 		ft_resolve_char(tab);
 }
 
-int	ft_evaluate(t_format *tab, const char* input)
+int	ft_evaluate(t_format *tab, const char* input, int i)
 {
-	input++;
-	while (!ft_is_conversion(*input))
+	i++;
+	while (!ft_is_conversion(input[i]))
 	{
-		if (*input == '-')
+		if (input[i] == '-')
 		{
 			tab->dash = 1;
-			input++;
+			i++;
 		}
-		if (ft_isdigit(*input))
+		if (ft_isdigit(input[i]))
 		{
-			tab->width = ft_atoi(input);
-			while (ft_isdigit(*input))
-				input++;
+			tab->width = ft_atoi(input + i);
+			while (ft_isdigit(input[i]))
+				i++;
 		}
-		if (*input == '.')
+		if (input[i] == '.')
 		{
-			input++;
-			tab->precision = ft_atoi(input);
-			while (ft_isdigit(*input))
-				input++;
+			i++;
+			tab->precision = ft_atoi(input + i);
+			while (ft_isdigit(input[i]))
+				i++;
 		}
-		if (*input == '+')
+		if (input[i] == '+')
 		{
 			tab->sign = 1;
-			input++;
+			i++;
 		}
-		if (*input == ' ')
+		if (input[i] == ' ')
 		{
 			tab->space = 1;
-			input++;
+			i++;
 		}
 	}
-	print_everything(tab);
-	if (*input == '#')
-		return (ft_alternate_conversion(tab, *(++input)), 2);
+	//print_everything(tab, input + i);
+	if (input[i] == '#')
+		ft_alternate_conversion(tab, input[++i]);
 	else
-		return (ft_conversion(tab, *input), 1);
+		ft_conversion(tab, input[i]);
+	return (i);
 }
 
 int	ft_printf(const char *input, ...)
 {
 	t_format	tab;
+	int i;
 
 	ft_constructor(&tab);
 	va_start(tab.arg, input);
-	while (*input)
+	i = -1;
+	while (input[++i])
 	{
-		if (*input == '%')
-			input += ft_evaluate(&tab, input);
+		if (input[i] == '%')
+			i = ft_evaluate(&tab, input, i);
 		else
-			tab.total += write(STDOUT_FILENO, input, 1);
-		input++;
+			tab.total += write(STDOUT_FILENO, &input[i], 1);
 	}
 	va_end(tab.arg);
 	return (tab.total);

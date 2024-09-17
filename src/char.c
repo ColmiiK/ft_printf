@@ -1,4 +1,5 @@
 #include "../include/ft_printf.h"
+#include <unistd.h>
 
 int	ft_print_char(char c)
 {
@@ -12,7 +13,11 @@ int	ft_print_char(char c)
 void ft_resolve_char(t_format *tab)
 {
 	// fix format for char
-	
+	if (tab->width)
+	{
+		while (--tab->width != 0)
+			tab->total += write(STDOUT_FILENO, " ", 1);
+	}
 	tab->total += ft_print_char(va_arg(tab->arg, int));
 }
 
