@@ -67,7 +67,8 @@ bool	ft_is_normal(char c)
 
 bool	ft_is_alternate(char c)
 {
-	if (c == 'o' || c == 'e' || c == 'E' || c == 'f' || c == 'g' || c == 'G' )
+	if (c == 'o' || c == 'e' || c == 'E' || c == 'f' || c == 'g' || c == 'G'
+		|| c == 'x' || c == 'X')
 		return (true);
 	return (false);
 }
@@ -78,7 +79,14 @@ void ft_alternate_conversion(t_format *tab, char c)
 	if (c == 'o')
 		ft_resolve_octal(tab);
 	else if (c == 'x' || c == 'X')
-		ft_resolve_number(tab, "0123456789abcdef");
+	{
+		tab->total += write(STDOUT_FILENO, "0x", 2);
+		tab->width -= 2;
+		if (c == 'x')
+			ft_resolve_unsigned_number(tab, "0123456789abcdef");
+		else
+			ft_resolve_unsigned_number(tab, "0123456789ABCDEF");
+	}
 	else if (c == 'e' || c == 'E')
 		ft_resolve_float(tab);
 	else if (c == 'f')
@@ -103,7 +111,7 @@ void ft_conversion(t_format *tab, char c)
 	else if (c == 'X')
 		ft_resolve_unsigned_number(tab, "0123456789ABCDEF");
 	else if (c == 'p')
-		ft_resolve_pointer(tab);
+		ft_resolve_pointer(tab, "0123456789abcdef");
 	else if (c == '%')
 		tab->total += write(STDOUT_FILENO, "%", 1);
 }

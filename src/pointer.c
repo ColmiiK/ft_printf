@@ -12,7 +12,7 @@ static int	ft_print_unsigned_number(unsigned long n, char *base)
 }
 
 // Field minimum width, left justify
-void ft_resolve_pointer(t_format *tab)
+void ft_resolve_pointer(t_format *tab, char *base)
 {
 	long n;
 	
@@ -25,7 +25,7 @@ void ft_resolve_pointer(t_format *tab)
 	else if (tab->dash)
 	{
 		tab->total += write(STDOUT_FILENO, "0x", 2);
-		tab->total += ft_print_unsigned_number(n, "0123456789abcdef");
+		tab->total += ft_print_unsigned_number(n, base);
 		tab->width -= digit_count(n, 16) + 2;
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
@@ -36,10 +36,10 @@ void ft_resolve_pointer(t_format *tab)
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 		tab->total += write(STDOUT_FILENO, "0x", 2);
-		tab->total += ft_print_unsigned_number(n, "0123456789abcdef");
+		tab->total += ft_print_unsigned_number(n, base);
 	}
 	else
 	{
-		tab->total += ft_print_unsigned_number(n, "0123456789abcdef");
+		tab->total += ft_print_unsigned_number(n, base);
 	} 
 }

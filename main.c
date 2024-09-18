@@ -24,7 +24,7 @@
 *		#G
 * */
 
-# define CONVERSION "->%#.5o<-"
+# define CONVERSION "->%#.10x<-"
 # define TOPRINT 42
 
 int main(){
