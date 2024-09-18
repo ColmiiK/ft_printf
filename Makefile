@@ -24,7 +24,7 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = ft_printf char string number unsigned_number float
+SRC_FILES = ft_printf char string number unsigned_number float pointer
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

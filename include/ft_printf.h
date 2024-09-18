@@ -21,10 +21,10 @@ typedef struct s_format
 
 int		ft_printf(const char *input, ...);
 void	ft_resolve_char(t_format *tab);
-void	ft_resolve_string(t_format *tab);
+void	ft_resolve_string(t_format *tab, char *str);
 void	ft_resolve_number(t_format *tab, char *base);
 void	ft_resolve_unsigned_number(t_format *tab, char *base);
 void	ft_resolve_float(t_format *tab);
-
+void	ft_resolve_pointer(t_format *tab);
 
 #endif

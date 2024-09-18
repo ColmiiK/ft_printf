@@ -12,7 +12,7 @@
 
 #include <libft.h>
 
-int	digit_count(int n)
+int	digit_count(long n, int base)
 {
 	int	i;
 
@@ -21,7 +21,7 @@ int	digit_count(int n)
 		i++;
 	while (n != 0)
 	{
-		n /= 10;
+		n /= base;
 		i++;
 	}
 	return (i);
@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 	char	*s;
 
 	i = 0;
-	j = digit_count(n);
+	j = digit_count(n, 10);
 	s = (char *)malloc(sizeof(char) * j + 1);
 	if (!s)
 		return (0);

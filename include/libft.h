@@ -597,4 +597,5 @@ char				*ft_pop(char *str, char c, bool del);
 bool				ft_all_same(char *str, char c);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_isalpha_loop(char *str);
+int					digit_count(long n, int base);
 #endif

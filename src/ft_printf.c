@@ -1,6 +1,13 @@
 #include "../include/ft_printf.h"
+#include <unistd.h>
 
 	/*
+	 * c
+	 * s
+	 * d i
+	 * u
+	 * x X p
+	 * %
 	 *
 	 *  - -> justificado izquierda, si no está se justifica a la derecha
 	 *  0 -> n padding (minimum field width)
@@ -78,17 +85,19 @@ void ft_conversion(t_format *tab, char c)
 	if (c == 'c')
 		ft_resolve_char(tab);
 	else if (c == 's')
-		ft_resolve_string(tab);
+		ft_resolve_string(tab, va_arg(tab->arg, char *));
 	else if (c == 'd' || c == 'i')
 		ft_resolve_number(tab, "0123456789");
 	else if (c == 'u')
 		ft_resolve_unsigned_number(tab, "0123456789");
-	else if (c == 'x' || c == 'X')
-		ft_resolve_number(tab, "0123456789abcdef");
+	else if (c == 'x')
+		ft_resolve_unsigned_number(tab, "0123456789abcdef");
+	else if (c == 'X')
+		ft_resolve_unsigned_number(tab, "0123456789ABCDEF");
 	else if (c == 'p')
-		ft_resolve_number(tab, "0123456789abcdef");
+		ft_resolve_pointer(tab);
 	else if (c == '%')
-		ft_resolve_char(tab);
+		tab->total += write(STDOUT_FILENO, "%", 1);
 }
 
 int	ft_evaluate(t_format *tab, const char* input, int i)
@@ -133,11 +142,12 @@ int	ft_evaluate(t_format *tab, const char* input, int i)
 	return (i);
 }
 
+
 int	ft_printf(const char *input, ...)
 {
 	t_format	tab;
 	int i;
-
+	
 	ft_constructor(&tab);
 	va_start(tab.arg, input);
 	i = -1;
