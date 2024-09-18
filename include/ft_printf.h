@@ -26,5 +26,6 @@ void	ft_resolve_number(t_format *tab, char *base);
 void	ft_resolve_unsigned_number(t_format *tab, char *base);
 void	ft_resolve_float(t_format *tab);
 void	ft_resolve_pointer(t_format *tab);
+void	ft_resolve_octal(t_format *tab);
 
 #endif

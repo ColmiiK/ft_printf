@@ -57,9 +57,17 @@ void ft_constructor(t_format *tab)
 	tab->space = 0;
 	tab->total = 0;
 }
-bool	ft_is_conversion(char c)
+bool	ft_is_normal(char c)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' || c == '%' || c == '#')
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
+			|| c == 'x' || c == 'X' || c == '%')
+		return (true);
+	return (false);
+}
+
+bool	ft_is_alternate(char c)
+{
+	if (c == 'o' || c == 'e' || c == 'E' || c == 'f' || c == 'g' || c == 'G' )
 		return (true);
 	return (false);
 }
@@ -68,7 +76,7 @@ bool	ft_is_conversion(char c)
 void ft_alternate_conversion(t_format *tab, char c)
 {
 	if (c == 'o')
-		ft_resolve_number(tab, "01234567");
+		ft_resolve_octal(tab);
 	else if (c == 'x' || c == 'X')
 		ft_resolve_number(tab, "0123456789abcdef");
 	else if (c == 'e' || c == 'E')
@@ -103,8 +111,10 @@ void ft_conversion(t_format *tab, char c)
 int	ft_evaluate(t_format *tab, const char* input, int i)
 {
 	i++;
-	while (!ft_is_conversion(input[i]))
+	while (!ft_is_normal(input[i]) && !ft_is_alternate(input[i]))
 	{
+		if (input[i] == '#')
+			i++;
 		if (input[i] == '-')
 		{
 			tab->dash = 1;
@@ -135,9 +145,9 @@ int	ft_evaluate(t_format *tab, const char* input, int i)
 		}
 	}
 	//print_everything(tab, input + i);
-	if (input[i] == '#')
-		ft_alternate_conversion(tab, input[++i]);
-	else
+	if (ft_is_alternate(input[i]))
+		ft_alternate_conversion(tab, input[i]);
+	else 
 		ft_conversion(tab, input[i]);
 	return (i);
 }

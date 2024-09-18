@@ -17,7 +17,7 @@ void ft_resolve_unsigned_number(t_format *tab, char *base)
 	long n;
 
 	n = va_arg(tab->arg, long);
-	len = digit_count(n);
+	len = digit_count(n, 10);
 	if (tab->dash)
 	{
 		if (len > tab->precision)

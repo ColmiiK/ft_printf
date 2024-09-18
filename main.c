@@ -14,25 +14,23 @@
 *		X
 *		p (add 0x)
 *		FIX NEGATIVE NUMBERS ON d
-*	TODO
 *		#o
+*	TODO
 *		#x (add 0x)
 *		#X (add 0x)
 *		#e
 *		#F
 *		#g
 *		#G
-*
-*
 * */
 
-# define CONVERSION "->%-20.10d<-"
-# define TOPRINT -42
+# define CONVERSION "->%#.5o<-"
+# define TOPRINT 42
 
 int main(){
 	char *str = "Hello";
 	int total1 = printf(CONVERSION, TOPRINT);
 	printf(" (%d)\n", total1);
 	int total2 = ft_printf(CONVERSION, TOPRINT);
-	ft_printf(" (%d)\n", total2);
+	printf(" (%d)\n", total2);
 }
