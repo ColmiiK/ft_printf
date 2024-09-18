@@ -29,12 +29,10 @@ void ft_resolve_number(t_format *tab, char *base)
 		n *= -1;
 	}
 	len = digit_count(n, 10);
-	if (tab->sign && n >= 0)
-		tab->total += write(STDOUT_FILENO, "+", 1);
-	else if (tab->space)
-		tab->total += write(STDOUT_FILENO, " ", 1);
 	if (tab->dash)
 	{
+		if ((tab->space || tab->sign) && !is_negative)
+			tab->width--;
 		if (len > tab->precision)
 			tab->width -= len;
 		else
@@ -42,6 +40,10 @@ void ft_resolve_number(t_format *tab, char *base)
 		tab->precision -= len - 1;
 		if (is_negative)
 			tab->width--;
+		if (tab->sign && !is_negative)
+			tab->total += write(STDOUT_FILENO, "+", 1);
+		else if (tab->space && !is_negative)
+			tab->total += write(STDOUT_FILENO, " ", 1);
 		if (is_negative)
 			tab->total += write(STDOUT_FILENO, "-", 1);
 		while (--tab->precision > 0)
@@ -52,6 +54,8 @@ void ft_resolve_number(t_format *tab, char *base)
 	}
 	else if (tab->width)
 	{
+		if ((tab->space || tab->sign) && !is_negative)
+			tab->width--;
 		if (len > tab->precision)
 			tab->width -= len;
 		else
@@ -61,6 +65,10 @@ void ft_resolve_number(t_format *tab, char *base)
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 		tab->precision -= len - 1;
+		if (tab->sign && !is_negative)
+			tab->total += write(STDOUT_FILENO, "+", 1);
+		else if (tab->space && !is_negative)
+			tab->total += write(STDOUT_FILENO, " ", 1);
 		if (is_negative)
 			tab->total += write(STDOUT_FILENO, "-", 1);
 		while (--tab->precision > 0)
@@ -69,6 +77,10 @@ void ft_resolve_number(t_format *tab, char *base)
 	}
 	else
 	{
+		if (tab->sign && !is_negative)
+			tab->total += write(STDOUT_FILENO, "+", 1);
+		else if (tab->space && !is_negative)
+			tab->total += write(STDOUT_FILENO, " ", 1);
 		if (is_negative)
 			tab->total += write(STDOUT_FILENO, "-", 1);
 		tab->precision -= len - 1;
