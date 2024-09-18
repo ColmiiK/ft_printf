@@ -15,17 +15,17 @@
 *		p (add 0x)
 *		FIX NEGATIVE NUMBERS ON d
 *		#o
-*	TODO
 *		#x (add 0x)
 *		#X (add 0x)
+*	TODO
 *		#e
 *		#F
 *		#g
 *		#G
 * */
 
-# define CONVERSION "->%#.10x<-"
-# define TOPRINT 42
+# define CONVERSION "->%#e<-"
+# define TOPRINT 42123123.0
 
 int main(){
 	char *str = "Hello";

@@ -80,15 +80,18 @@ void ft_alternate_conversion(t_format *tab, char c)
 		ft_resolve_octal(tab);
 	else if (c == 'x' || c == 'X')
 	{
-		tab->total += write(STDOUT_FILENO, "0x", 2);
-		tab->width -= 2;
 		if (c == 'x')
-			ft_resolve_unsigned_number(tab, "0123456789abcdef");
+			ft_resolve_alternate_hex(tab, "0123456789abcdef");
 		else
-			ft_resolve_unsigned_number(tab, "0123456789ABCDEF");
+			ft_resolve_alternate_hex(tab, "0123456789ABCDEF");
 	}
 	else if (c == 'e' || c == 'E')
-		ft_resolve_float(tab);
+	{
+		if (c == 'e')
+			ft_resolve_alternate_float(tab, 'e');
+		else
+			ft_resolve_alternate_float(tab, 'E');
+	}
 	else if (c == 'f')
 		ft_resolve_float(tab);
 	else if (c == 'g' || c == 'G')
@@ -118,11 +121,17 @@ void ft_conversion(t_format *tab, char c)
 
 int	ft_evaluate(t_format *tab, const char* input, int i)
 {
+	bool	pound;
+
+	pound = false;
 	i++;
 	while (!ft_is_normal(input[i]) && !ft_is_alternate(input[i]))
 	{
 		if (input[i] == '#')
+		{
+			pound = true;
 			i++;
+		}
 		if (input[i] == '-')
 		{
 			tab->dash = 1;
@@ -153,7 +162,7 @@ int	ft_evaluate(t_format *tab, const char* input, int i)
 		}
 	}
 	//print_everything(tab, input + i);
-	if (ft_is_alternate(input[i]))
+	if (pound && ft_is_alternate(input[i]))
 		ft_alternate_conversion(tab, input[i]);
 	else 
 		ft_conversion(tab, input[i]);
