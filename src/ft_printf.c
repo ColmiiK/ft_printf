@@ -93,9 +93,9 @@ void ft_alternate_conversion(t_format *tab, char c)
 			ft_resolve_alternate_float(tab, 'E');
 	}
 	else if (c == 'f')
-		ft_resolve_float(tab);
+		ft_resolve_alternate_float(tab, 'e');
 	else if (c == 'g' || c == 'G')
-		ft_resolve_float(tab);
+		ft_resolve_alternate_float(tab, 'e');
 }
 
 // cspdiuxX%

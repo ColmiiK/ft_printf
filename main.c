@@ -24,8 +24,8 @@
 *		#G
 * */
 
-# define CONVERSION "->%10.5d<-"
-# define TOPRINT -42
+# define CONVERSION "->%#20.10e<-"
+# define TOPRINT 42.0
 
 int main(){
 	char *str = "Hello";
