@@ -11,11 +11,11 @@ static int	ft_print_char(char c)
 
 
 // Char only accepts field minimum width and left justify
-void	ft_resolve_char(t_format *tab)
+void	ft_resolve_char(t_format *tab, char c)
 {
 	if (tab->dash)
 	{
-		tab->total += ft_print_char(va_arg(tab->arg, int));
+		tab->total += ft_print_char(c);
 		while (--tab->width != 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 	}
@@ -23,9 +23,9 @@ void	ft_resolve_char(t_format *tab)
 	{
 		while (--tab->width != 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
-		tab->total += ft_print_char(va_arg(tab->arg, int));
+		tab->total += ft_print_char(c);
 	}
 	else
-		tab->total += ft_print_char(va_arg(tab->arg, int));
+		tab->total += ft_print_char(c);
 }
 

@@ -1,7 +1,6 @@
 #include "../include/ft_printf.h"
-#include <unistd.h>
 
-static int	ft_print_number(int n, char *base)
+static int	ft_print_number(long n, char *base)
 {
 	size_t len;
 
@@ -15,9 +14,9 @@ static int	ft_print_number(int n, char *base)
 	return (ft_print_number(n / len, base) + ft_print_number(n % len, base));
 }
 
-int	ft_print_float(double n, int precision)
+static int	ft_print_float(double n, int precision)
 {
-	int		integer;
+	long	integer;
 	float	fractional;
 	int		total;
 	int		digit;
@@ -41,12 +40,10 @@ int	ft_print_float(double n, int precision)
 	return (total);
 }
 
-void ft_resolve_float(t_format *tab)
+void ft_resolve_float(t_format *tab, double n)
 {
-	double n;
 	int len;
 
-	n = va_arg(tab->arg, double);
 	len = digit_count((int)n, 10);
 	if (tab->sign && n >= 0)
 		tab->total += write(STDOUT_FILENO, "+", 1);

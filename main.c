@@ -21,14 +21,15 @@
 *		#e
 *		#f
 *		#F
-*	TODO
+*		if there is no precision specified (ie. "%#.e") doesn't work properly, change check
 *		#g
 *		#G
-*		if there is no precision specified (ie. "%#.e") doesn't work properly, change check
+*	TODO
+*		#f long numbers overflow (fix?)
 * */
 
-# define CONVERSION "->%#-10.x<-"
-# define TOPRINT 42
+# define CONVERSION "->%#20.10g<-"
+# define TOPRINT 112312.1234
 
 int main(){
 	char *str = "Hello";

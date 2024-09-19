@@ -15,14 +15,12 @@ static int	ft_print_number(int n, char *base)
 }
 
 // Field minimum width, left justify, precision, space, sign
-void ft_resolve_number(t_format *tab, char *base)
+void ft_resolve_number(t_format *tab, int n, char *base)
 {
 	int		len;
-	long	n;
 	bool is_negative;
 
 	is_negative = false;
-	n = va_arg(tab->arg, int);
 	if (n < 0)
 	{
 		is_negative = true;

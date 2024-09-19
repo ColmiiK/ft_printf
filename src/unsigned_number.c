@@ -11,12 +11,10 @@ static int	ft_print_unsigned_number(unsigned long n, char *base)
 }
 
 // Field minimum width, left justify, precision
-void ft_resolve_unsigned_number(t_format *tab, char *base)
+void ft_resolve_unsigned_number(t_format *tab, long n, char *base)
 {
 	int len;
-	long n;
 
-	n = va_arg(tab->arg, long);
 	len = digit_count(n, 10);
 	if (tab->dash)
 	{

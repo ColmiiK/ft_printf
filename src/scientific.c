@@ -48,8 +48,7 @@ static void ft_print_scientific(t_format * tab, double num, int precision, char 
 	tab->total += ft_print_number(int_part, "0123456789");
 
     // Print decimal point
-    if (precision > 0)
-        tab->total += write(1, ".", 1);
+    tab->total += write(1, ".", 1);
 
     // Print fractional part with given precision
     for (int i = 0; i < precision; i++)
@@ -77,18 +76,15 @@ static void ft_print_scientific(t_format * tab, double num, int precision, char 
 	tab->total += ft_print_number(exponent, "0123456789");
 }
 
-void ft_resolve_scientific(t_format *tab, char c)
+void ft_resolve_scientific(t_format *tab, double n, char c)
 {
-	double	n;
-
-	n = va_arg(tab->arg, double);
 	if (tab->sign && n >= 0)
 		tab->total += write(STDOUT_FILENO, "+", 1);
 	else if (tab->space)
 		tab->total += write(STDOUT_FILENO, " ", 1);
 	if (tab->dash)
 	{
-		if (tab->precision)
+		if (tab->dot)
 			ft_print_scientific(tab, n, tab->precision, c);
 		else
 		 	ft_print_scientific(tab, n, 6, c);
@@ -101,14 +97,14 @@ void ft_resolve_scientific(t_format *tab, char c)
 		tab->width -= 12 - 2;
 		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
-		if (tab->precision)
+		if (tab->dot)
 			ft_print_scientific(tab, n, tab->precision, c);
 		else
 		 	ft_print_scientific(tab, n, 6, c);
 	}
 	else
 	{
-		if (tab->precision)
+		if (tab->dot)
 			ft_print_scientific(tab, n, tab->precision, c);
 		else
 			ft_print_scientific(tab, n, 6, c);

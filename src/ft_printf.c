@@ -69,44 +69,49 @@ bool	ft_is_alternate(char c)
 void ft_alternate_conversion(t_format *tab, char c)
 {
 	if (c == 'o')
-		ft_resolve_octal(tab);
+		ft_resolve_octal(tab, va_arg(tab->arg, int));
 	else if (c == 'x' || c == 'X')
 	{
 		if (c == 'x')
-			ft_resolve_alternate_hex(tab, "0123456789abcdef");
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789abcdef");
 		else
-			ft_resolve_alternate_hex(tab, "0123456789ABCDEF");
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789ABCDEF");
 	}
 	else if (c == 'e' || c == 'E')
 	{
 		if (c == 'e')
-			ft_resolve_scientific(tab, 'e');
+			ft_resolve_scientific(tab, va_arg(tab->arg, double), 'e');
 		else
-			ft_resolve_scientific(tab, 'E');
+			ft_resolve_scientific(tab, va_arg(tab->arg, double), 'E');
 	}
 	else if (c == 'f' || c == 'F')
-		ft_resolve_float(tab);
+		ft_resolve_float(tab, va_arg(tab->arg, double));
 	else if (c == 'g' || c == 'G')
-		ft_resolve_scientific(tab, 'e');
+	{
+		if (c == 'g')
+			ft_resolve_smart(tab, va_arg(tab->arg, double), 'g');
+		else
+			ft_resolve_smart(tab, va_arg(tab->arg, double), 'G');
+	}
 }
 
 // cspdiuxX%
 void ft_conversion(t_format *tab, char c)
 {
 	if (c == 'c')
-		ft_resolve_char(tab);
+		ft_resolve_char(tab, va_arg(tab->arg, int));
 	else if (c == 's')
 		ft_resolve_string(tab, va_arg(tab->arg, char *));
 	else if (c == 'd' || c == 'i')
-		ft_resolve_number(tab, "0123456789");
+		ft_resolve_number(tab, va_arg(tab->arg, int), "0123456789");
 	else if (c == 'u')
-		ft_resolve_unsigned_number(tab, "0123456789");
+		ft_resolve_unsigned_number(tab, va_arg(tab->arg, int), "0123456789");
 	else if (c == 'x')
-		ft_resolve_unsigned_number(tab, "0123456789abcdef");
+		ft_resolve_unsigned_number(tab, va_arg(tab->arg, long), "0123456789abcdef");
 	else if (c == 'X')
-		ft_resolve_unsigned_number(tab, "0123456789ABCDEF");
+		ft_resolve_unsigned_number(tab, va_arg(tab->arg, long), "0123456789ABCDEF");
 	else if (c == 'p')
-		ft_resolve_pointer(tab, "0123456789abcdef");
+		ft_resolve_pointer(tab, va_arg(tab->arg, long), "0123456789abcdef");
 	else if (c == '%')
 		tab->total += write(STDOUT_FILENO, "%", 1);
 }

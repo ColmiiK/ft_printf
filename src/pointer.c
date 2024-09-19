@@ -12,11 +12,8 @@ static int	ft_print_unsigned_number(unsigned long n, char *base)
 }
 
 // Field minimum width, left justify
-void ft_resolve_pointer(t_format *tab, char *base)
+void ft_resolve_pointer(t_format *tab, long n, char *base)
 {
-	long n;
-	
-	n = va_arg(tab->arg, long);
 	if (!n)
 	{
 		tab->width--;

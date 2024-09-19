@@ -16,12 +16,10 @@ static int	ft_print_number(int n, char *base)
 }
 
 // Field minimum width, left justify, precision, space, sign
-void ft_resolve_octal(t_format *tab)
+void ft_resolve_octal(t_format *tab, int n)
 {
 	int		len;
-	long	n;
 	
-	n = va_arg(tab->arg, int);
 	len = digit_count(n, 8);
 	if (!n)
 		tab->total += write(STDOUT_FILENO, "0", 1);
