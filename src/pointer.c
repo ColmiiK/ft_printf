@@ -16,7 +16,6 @@ void ft_resolve_pointer(t_format *tab, long n, char *base)
 {
 	if (!n)
 	{
-		tab->width--;
 		ft_resolve_string(tab, "(nil)");
 	}
 	else if (tab->dash)

@@ -32,11 +32,14 @@ OBJF = .cache_exists
 
 ###
 
-all:		$(NAME)
+all:		$(LIBFT) $(NAME)
 
 $(NAME):	$(OBJ)
-			@make -C $(LIBFT)
+			@make -j -C $(LIBFT)
 			@$(AR) $(NAME) $(OBJ)
+			@$(AR) $(LIBFT)/libft.a
+			@$(AR) $(NAME) lib/libft/obj/*.o
+			@rm -f lib/libft/obj/*.o
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
@@ -65,4 +68,13 @@ re:			fclean all
 norm:
 			@norminette $(SRC) $(INCLUDE) $(LIBFT)
 
-.PHONY: all clean fclean re norm
+bonus:		$(OBJ)
+			@make -j -C $(LIBFT)
+			@$(AR) $(NAME) $(OBJ)
+			@$(AR) x $(LIBFT)/libft.a
+			@$(AR) $(NAME) lib/libft/obj/*.o
+			@rm -f lib/libft/obj/*.o
+			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
+			
+
+.PHONY: all clean fclean re norm bonus

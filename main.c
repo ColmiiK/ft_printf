@@ -28,13 +28,13 @@
 *		#f long numbers overflow (fix?)
 * */
 
-# define CONVERSION "->%#20.10g<-"
-# define TOPRINT 112312.1234
+# define CONVERSION "%p"
+# define TOPRINT "a"
 
 int main(){
-	char *str = "Hello";
-	int total1 = printf(CONVERSION, TOPRINT);
+	char *str = NULL;
+	int total1 = printf(CONVERSION, str);
 	printf(" (%d)\n", total1);
-	int total2 = ft_printf(CONVERSION, TOPRINT);
+	int total2 = ft_printf(CONVERSION, str);
 	printf(" (%d)\n", total2);
 }
