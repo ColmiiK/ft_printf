@@ -17,16 +17,18 @@
 *		#o
 *		#x (add 0x)
 *		#X (add 0x)
-*	TODO
+*		#E
 *		#e
+*		#f
 *		#F
+*	TODO
 *		#g
 *		#G
 *		if there is no precision specified (ie. "%#.e") doesn't work properly, change check
 * */
 
-# define CONVERSION "->%#.5e<-"
-# define TOPRINT 42.0
+# define CONVERSION "->%#-10.x<-"
+# define TOPRINT 42
 
 int main(){
 	char *str = "Hello";

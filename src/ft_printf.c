@@ -32,13 +32,8 @@ void print_everything(t_format *tab, const char *input) {
 	printf("\nCurrent input is: ->%s<-\n", input);
 	printf("width: \t\t%d\n", tab->width);
 	printf("precision: \t%d\n", tab->precision);
-	printf("padding: \t%d\n", tab->padding);
-	printf("point: \t\t%d\n", tab->point);
 	printf("dash: \t\t%d\n", tab->dash);
-	printf("length: \t%d\n", tab->length);
 	printf("sign: \t\t%d\n", tab->sign);
-	printf("is zero: \t%d\n", tab->is_zero);
-	printf("percentage: \t%d\n", tab->percentage);
 	printf("space: \t\t%d\n", tab->space);
 	printf("total: \t\t%d\n\n", tab->total);
 }
@@ -47,15 +42,12 @@ void ft_constructor(t_format *tab)
 {
 	tab->width = 0;
 	tab->precision = 0;
-	tab->padding = 0;
-	tab->point = 0;
+	tab->dot = 0;
 	tab->dash = 0;
-	tab->length = 0;
 	tab->sign = 0;
-	tab->is_zero = 0;
-	tab->percentage = 0;
 	tab->space = 0;
 	tab->total = 0;
+
 }
 bool	ft_is_normal(char c)
 {
@@ -68,7 +60,7 @@ bool	ft_is_normal(char c)
 bool	ft_is_alternate(char c)
 {
 	if (c == 'o' || c == 'e' || c == 'E' || c == 'f' || c == 'g' || c == 'G'
-		|| c == 'x' || c == 'X')
+		|| c == 'x' || c == 'X' || c == 'F')
 		return (true);
 	return (false);
 }
@@ -88,14 +80,14 @@ void ft_alternate_conversion(t_format *tab, char c)
 	else if (c == 'e' || c == 'E')
 	{
 		if (c == 'e')
-			ft_resolve_alternate_float(tab, 'e');
+			ft_resolve_scientific(tab, 'e');
 		else
-			ft_resolve_alternate_float(tab, 'E');
+			ft_resolve_scientific(tab, 'E');
 	}
-	else if (c == 'f')
-		ft_resolve_alternate_float(tab, 'e');
+	else if (c == 'f' || c == 'F')
+		ft_resolve_float(tab);
 	else if (c == 'g' || c == 'G')
-		ft_resolve_alternate_float(tab, 'e');
+		ft_resolve_scientific(tab, 'e');
 }
 
 // cspdiuxX%
@@ -146,6 +138,7 @@ int	ft_evaluate(t_format *tab, const char* input, int i)
 		if (input[i] == '.')
 		{
 			i++;
+			tab->dot = true;
 			tab->precision = ft_atoi(input + i);
 			while (ft_isdigit(input[i]))
 				i++;

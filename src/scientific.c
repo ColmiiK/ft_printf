@@ -14,7 +14,7 @@ static int	ft_print_number(int n, char *base)
 	return (ft_print_number(n / len, base) + ft_print_number(n % len, base));
 }
 
-static void ft_print_float(t_format * tab, double num, int precision)
+static void ft_print_scientific(t_format * tab, double num, int precision, char c)
 {
     int exponent = 0;
     double normalized;
@@ -62,7 +62,7 @@ static void ft_print_float(t_format * tab, double num, int precision)
     }
 
     // Print the 'e' and exponent part in the form +eXX or -eXX
-    tab->total += write(1, "e", 1);
+    tab->total += write(1, &c, 1);
     if (exponent >= 0)
         tab->total += write(1, "+", 1);
     else
@@ -77,11 +77,10 @@ static void ft_print_float(t_format * tab, double num, int precision)
 	tab->total += ft_print_number(exponent, "0123456789");
 }
 
-void ft_resolve_alternate_float(t_format *tab, char c)
+void ft_resolve_scientific(t_format *tab, char c)
 {
 	double	n;
 
-	(void)c;
 	n = va_arg(tab->arg, double);
 	if (tab->sign && n >= 0)
 		tab->total += write(STDOUT_FILENO, "+", 1);
@@ -90,9 +89,9 @@ void ft_resolve_alternate_float(t_format *tab, char c)
 	if (tab->dash)
 	{
 		if (tab->precision)
-			ft_print_float(tab, n, tab->precision);
+			ft_print_scientific(tab, n, tab->precision, c);
 		else
-		 	ft_print_float(tab, n, 6);
+		 	ft_print_scientific(tab, n, 6, c);
 		tab->width -= 12 - 2;
 		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
@@ -103,17 +102,16 @@ void ft_resolve_alternate_float(t_format *tab, char c)
 		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 		if (tab->precision)
-			ft_print_float(tab, n, tab->precision);
+			ft_print_scientific(tab, n, tab->precision, c);
 		else
-		 	ft_print_float(tab, n, 6);
+		 	ft_print_scientific(tab, n, 6, c);
 	}
 	else
 	{
 		if (tab->precision)
-			ft_print_float(tab, n, tab->precision);
+			ft_print_scientific(tab, n, tab->precision, c);
 		else
-			ft_print_float(tab, n, 6);
+			ft_print_scientific(tab, n, 6, c);
 	}
-
 }
 
