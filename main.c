@@ -22,9 +22,10 @@
 *		#F
 *		#g
 *		#G
+*		if there is no precision specified (ie. "%#.e") doesn't work properly, change check
 * */
 
-# define CONVERSION "->%#20.10e<-"
+# define CONVERSION "->%#.5e<-"
 # define TOPRINT 42.0
 
 int main(){

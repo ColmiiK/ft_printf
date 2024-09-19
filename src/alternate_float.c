@@ -89,17 +89,23 @@ void ft_resolve_alternate_float(t_format *tab, char c)
 		tab->total += write(STDOUT_FILENO, " ", 1);
 	if (tab->dash)
 	{
-		ft_print_float(tab, n, 6 + tab->precision);
-		tab->width -= 12 - 1;
+		if (tab->precision)
+			ft_print_float(tab, n, tab->precision);
+		else
+		 	ft_print_float(tab, n, 6);
+		tab->width -= 12 - 2;
 		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 	}
 	else if (tab->width)
 	{
-		tab->width -= 12 - 1 + tab->precision;
+		tab->width -= 12 - 2;
 		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
-		ft_print_float(tab, n, tab->precision);
+		if (tab->precision)
+			ft_print_float(tab, n, tab->precision);
+		else
+		 	ft_print_float(tab, n, 6);
 	}
 	else
 	{
