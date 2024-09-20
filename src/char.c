@@ -16,12 +16,12 @@ void	ft_resolve_char(t_format *tab, char c)
 	if (tab->dash)
 	{
 		tab->total += ft_print_char(c);
-		while (--tab->width != 0)
+		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 	}
 	else if (tab->width)
 	{
-		while (--tab->width != 0)
+		while (--tab->width > 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 		tab->total += ft_print_char(c);
 	}

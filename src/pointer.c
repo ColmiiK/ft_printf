@@ -15,19 +15,21 @@ static int	ft_print_unsigned_number(unsigned long n, char *base)
 void ft_resolve_pointer(t_format *tab, long n, char *base)
 {
 	if (!n)
-	{
 		ft_resolve_string(tab, "(nil)");
-	}
 	else if (tab->dash)
 	{
 		tab->total += write(STDOUT_FILENO, "0x", 2);
 		tab->total += ft_print_unsigned_number(n, base);
+		if (n == -1)
+			tab->width -= 16 + 2;
 		tab->width -= digit_count(n, 16) + 2;
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 	}
 	else if (tab->width)
 	{
+		if (n == -1)
+			tab->width -= 16 + 2;
 		tab->width -= digit_count(n, 16) + 2;
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
@@ -36,6 +38,7 @@ void ft_resolve_pointer(t_format *tab, long n, char *base)
 	}
 	else
 	{
+		tab->total += write(STDOUT_FILENO, "0x", 2);
 		tab->total += ft_print_unsigned_number(n, base);
-	} 
+	}
 }

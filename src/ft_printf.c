@@ -41,13 +41,12 @@ void print_everything(t_format *tab, const char *input) {
 void ft_constructor(t_format *tab)
 {
 	tab->width = 0;
+	tab->pad = ' ';
 	tab->precision = 0;
 	tab->dot = 0;
 	tab->dash = 0;
 	tab->sign = 0;
 	tab->space = 0;
-	tab->total = 0;
-
 }
 bool	ft_is_normal(char c)
 {
@@ -73,9 +72,9 @@ void ft_alternate_conversion(t_format *tab, char c)
 	else if (c == 'x' || c == 'X')
 	{
 		if (c == 'x')
-			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789abcdef");
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789abcdef", "0x");
 		else
-			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789ABCDEF");
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789ABCDEF", "0X");
 	}
 	else if (c == 'e' || c == 'E')
 	{
@@ -107,9 +106,9 @@ void ft_conversion(t_format *tab, char c)
 	else if (c == 'u')
 		ft_resolve_unsigned_number(tab, va_arg(tab->arg, int), "0123456789");
 	else if (c == 'x')
-		ft_resolve_unsigned_number(tab, va_arg(tab->arg, long), "0123456789abcdef");
+		ft_resolve_hexadecimal(tab, va_arg(tab->arg, long), "0123456789abcdef");
 	else if (c == 'X')
-		ft_resolve_unsigned_number(tab, va_arg(tab->arg, long), "0123456789ABCDEF");
+		ft_resolve_hexadecimal(tab, va_arg(tab->arg, long), "0123456789ABCDEF");
 	else if (c == 'p')
 		ft_resolve_pointer(tab, va_arg(tab->arg, long), "0123456789abcdef");
 	else if (c == '%')
@@ -136,6 +135,8 @@ int	ft_evaluate(t_format *tab, const char* input, int i)
 		}
 		if (ft_isdigit(input[i]))
 		{
+			if (input[i] == '0')
+				tab->pad = '0';
 			tab->width = ft_atoi(input + i);
 			while (ft_isdigit(input[i]))
 				i++;
@@ -173,6 +174,7 @@ int	ft_printf(const char *input, ...)
 	t_format	tab;
 	int i;
 	
+	tab.total = 0;
 	ft_constructor(&tab);
 	va_start(tab.arg, input);
 	i = -1;
@@ -182,6 +184,7 @@ int	ft_printf(const char *input, ...)
 			i = ft_evaluate(&tab, input, i);
 		else
 			tab.total += write(STDOUT_FILENO, &input[i], 1);
+		ft_constructor(&tab);
 	}
 	va_end(tab.arg);
 	return (tab.total);

@@ -1,11 +1,11 @@
 #include "../include/ft_printf.h"
 
-static int	ft_print_string(char *str)
+static int	ft_print_string(char *str, int index)
 {
-	size_t total;
+	int total;
 
 	total = 0;
-	while (*str)
+	while (*str && total < index)
 		total += write(STDOUT_FILENO, str++, 1);
 	return (total);
 }
@@ -14,22 +14,43 @@ static int	ft_print_string(char *str)
 void ft_resolve_string(t_format *tab, char *str)
 {
 	if (!str)
+	{
 		str = "(null)";
+		if (tab->precision < 6)
+			tab->precision = 0;
+	}
 	if (tab->dash)
 	{
-		tab->total += ft_print_string(str);
-		tab->width -= ft_strlen(str) - 1;
+		if (tab->dot)
+			tab->total += ft_print_string(str, tab->precision);
+		else
+			tab->total += ft_print_string(str, ft_strlen(str));
+		if (tab->dot && tab->precision < (int)ft_strlen(str))
+			tab->width -= tab->precision;
+		else
+			tab->width -= ft_strlen(str);
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
 	}
 	else if (tab->width)
 	{
-		tab->width -= ft_strlen(str);
+		if (tab->dot && tab->precision < (int)ft_strlen(str))
+			tab->width -= tab->precision;
+		else
+			tab->width -= ft_strlen(str);
 		while (--tab->width >= 0)
 			tab->total += write(STDOUT_FILENO, " ", 1);
-		tab->total += ft_print_string(str);
+		if (tab->dot)
+			tab->total += ft_print_string(str, tab->precision);
+		else
+			tab->total += ft_print_string(str, ft_strlen(str));
 	}
 	else
-		tab->total += ft_print_string(str);
+	{
+		if (tab->dot)
+			tab->total += ft_print_string(str, tab->precision);
+		else
+		 	tab->total += ft_print_string(str, ft_strlen(str));
+	}
 }
 
