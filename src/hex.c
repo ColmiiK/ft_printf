@@ -15,6 +15,10 @@ void ft_resolve_hexadecimal(t_format *tab, long n, char *base)
 	int		len;
 
 	len = digit_count(n, 16);
+	if (n == LONG_MAX || (unsigned long)n == ULONG_MAX)
+		len = 8;
+	if (n == LONG_MIN)
+		len = 1;
 	if (tab->dash)
 	{
 		if (len > tab->precision)

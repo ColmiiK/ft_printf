@@ -71,7 +71,7 @@ norm:
 bonus:		$(OBJ)
 			@make -j -C $(LIBFT)
 			@$(AR) $(NAME) $(OBJ)
-			@$(AR) x $(LIBFT)/libft.a
+			@$(AR) $(LIBFT)/libft.a
 			@$(AR) $(NAME) lib/libft/obj/*.o
 			@rm -f lib/libft/obj/*.o
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
