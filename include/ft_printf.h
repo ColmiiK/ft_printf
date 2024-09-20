@@ -29,4 +29,12 @@ void	ft_resolve_scientific(t_format *tab, double n, char c);
 void	ft_resolve_float(t_format *tab, double n);
 void	ft_resolve_smart(t_format *tab, double n, char c);
 
+void	ft_alternate_conversion(t_format *tab, char c);
+void	ft_conversion(t_format *tab, char c);
+
+bool	ft_is_alternate(char c);
+bool	ft_is_normal(char c);
+
+int		ft_print_number(long n, char *base);
+
 #endif

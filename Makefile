@@ -24,7 +24,7 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = ft_printf char string number unsigned_number hex pointer octal alternate_hex scientific float smart
+SRC_FILES = ft_printf char string number unsigned_number hex pointer octal alternate_hex scientific float smart utils 
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

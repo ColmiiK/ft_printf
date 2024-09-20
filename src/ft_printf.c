@@ -1,44 +1,6 @@
 #include "../include/ft_printf.h"
-#include <unistd.h>
 
-	/*
-	 * c
-	 * s
-	 * d i
-	 * u
-	 * x X p
-	 * %
-	 *
-	 *  - -> justificado izquierda, si no está se justifica a la derecha
-	 *  0 -> n padding (minimum field width)
-	 *  . -> precisión (seguido de número) || si es un float corta o añade ceros
-	 *			si hace falta, si es un int añade ceros a la izquierda
-	 * ' '-> añade un espacio si el número es positivo
-	 *	+ -> printea el signo
-	 *	# -> forma alternativa:
-	 *			o -> octal (0 + numero en octal)
-	 *			x -> hex (0x + numero)
-	 *			X -> HEX (0x + numero)
-	 *			e -> Siempre muestra punto decimal (e)
-	 *			E -> Siempre muestra punto decimal (E)
-	 *			f -> Siempre muestra punto decimal
-	 *			g -> Siempre muestra punto decimal, no borra ceros
-	 *			G -> Siempre muestra punto decimal, no borra ceros
-	 *
-	 * */
-
-
-void print_everything(t_format *tab, const char *input) {
-	printf("\nCurrent input is: ->%s<-\n", input);
-	printf("width: \t\t%d\n", tab->width);
-	printf("precision: \t%d\n", tab->precision);
-	printf("dash: \t\t%d\n", tab->dash);
-	printf("sign: \t\t%d\n", tab->sign);
-	printf("space: \t\t%d\n", tab->space);
-	printf("total: \t\t%d\n\n", tab->total);
-}
-
-void ft_constructor(t_format *tab)
+static void	ft_constructor(t_format *tab)
 {
 	tab->width = 0;
 	tab->pad = ' ';
@@ -48,126 +10,59 @@ void ft_constructor(t_format *tab)
 	tab->sign = 0;
 	tab->space = 0;
 }
-bool	ft_is_normal(char c)
+
+static void ft_setter(void *arg, int *index)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
-			|| c == 'x' || c == 'X' || c == '%')
-		return (true);
-	return (false);
+	bool *temp;
+
+	temp = arg;
+	*temp = 1;
+	*index = *index + 1;
 }
 
-bool	ft_is_alternate(char c)
+static int ft_evaluate_alternate(t_format *tab, const char *input, int i, bool *pound)
 {
-	if (c == 'o' || c == 'e' || c == 'E' || c == 'f' || c == 'g' || c == 'G'
-		|| c == 'x' || c == 'X' || c == 'F')
-		return (true);
-	return (false);
-}
-
-// oxXeEfgG
-void ft_alternate_conversion(t_format *tab, char c)
-{
-	if (c == 'o')
-		ft_resolve_octal(tab, va_arg(tab->arg, int));
-	else if (c == 'x' || c == 'X')
+	if (input[i] == '#')
+		ft_setter(pound, &i);
+	if (input[i] == '-')
+		ft_setter(&tab->dash, &i);
+	if (ft_isdigit(input[i]))
 	{
-		if (c == 'x')
-			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789abcdef", "0x");
-		else
-			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789ABCDEF", "0X");
+		if (input[i] == '0')
+			tab->pad = '0';
+		tab->width = ft_atoi(input + i);
+		while (ft_isdigit(input[i]))
+			i++;
 	}
-	else if (c == 'e' || c == 'E')
+	if (input[i] == '.')
 	{
-		if (c == 'e')
-			ft_resolve_scientific(tab, va_arg(tab->arg, double), 'e');
-		else
-			ft_resolve_scientific(tab, va_arg(tab->arg, double), 'E');
+		i++;
+		tab->dot = true;
+		tab->precision = ft_atoi(input + i);
+		while (ft_isdigit(input[i]))
+			i++;
 	}
-	else if (c == 'f' || c == 'F')
-		ft_resolve_float(tab, va_arg(tab->arg, double));
-	else if (c == 'g' || c == 'G')
-	{
-		if (c == 'g')
-			ft_resolve_smart(tab, va_arg(tab->arg, double), 'g');
-		else
-			ft_resolve_smart(tab, va_arg(tab->arg, double), 'G');
-	}
+	if (input[i] == '+')
+		ft_setter(&tab->sign, &i);
+	if (input[i] == ' ')
+		ft_setter(&tab->space, &i);
+	return (i);
 }
 
-// cspdiuxX%
-void ft_conversion(t_format *tab, char c)
-{
-	if (c == 'c')
-		ft_resolve_char(tab, va_arg(tab->arg, int));
-	else if (c == 's')
-		ft_resolve_string(tab, va_arg(tab->arg, char *));
-	else if (c == 'd' || c == 'i')
-		ft_resolve_number(tab, va_arg(tab->arg, int), "0123456789");
-	else if (c == 'u')
-		ft_resolve_unsigned_number(tab, va_arg(tab->arg, int), "0123456789");
-	else if (c == 'x')
-		ft_resolve_hexadecimal(tab, va_arg(tab->arg, long), "0123456789abcdef");
-	else if (c == 'X')
-		ft_resolve_hexadecimal(tab, va_arg(tab->arg, long), "0123456789ABCDEF");
-	else if (c == 'p')
-		ft_resolve_pointer(tab, va_arg(tab->arg, long), "0123456789abcdef");
-	else if (c == '%')
-		tab->total += write(STDOUT_FILENO, "%", 1);
-}
-
-int	ft_evaluate(t_format *tab, const char* input, int i)
+static int	ft_evaluate(t_format *tab, const char* input, int i)
 {
 	bool	pound;
 
 	pound = false;
 	i++;
 	while (!ft_is_normal(input[i]) && !ft_is_alternate(input[i]))
-	{
-		if (input[i] == '#')
-		{
-			pound = true;
-			i++;
-		}
-		if (input[i] == '-')
-		{
-			tab->dash = 1;
-			i++;
-		}
-		if (ft_isdigit(input[i]))
-		{
-			if (input[i] == '0')
-				tab->pad = '0';
-			tab->width = ft_atoi(input + i);
-			while (ft_isdigit(input[i]))
-				i++;
-		}
-		if (input[i] == '.')
-		{
-			i++;
-			tab->dot = true;
-			tab->precision = ft_atoi(input + i);
-			while (ft_isdigit(input[i]))
-				i++;
-		}
-		if (input[i] == '+')
-		{
-			tab->sign = 1;
-			i++;
-		}
-		if (input[i] == ' ')
-		{
-			tab->space = 1;
-			i++;
-		}
-	}
-	//print_everything(tab, input + i);
+		i = ft_evaluate_alternate(tab,  input, i, &pound);
 	if (pound && ft_is_alternate(input[i]))
 		ft_alternate_conversion(tab, input[i]);
 	else 
 		ft_conversion(tab, input[i]);
 	return (i);
 }
-
 
 int	ft_printf(const char *input, ...)
 {

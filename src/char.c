@@ -9,8 +9,6 @@ static int	ft_print_char(char c)
 	return (total);
 }
 
-
-// Char only accepts field minimum width and left justify
 void	ft_resolve_char(t_format *tab, char c)
 {
 	if (tab->dash)
