@@ -2,7 +2,7 @@
 # define FT_PRINTF_H
 
 # define HEXUP "0123456789ABCDEF"
-# define HEXLOW "'123456789abcdef"
+# define HEXLOW "0123456789abcdef"
 
 # include "libft.h"
 
