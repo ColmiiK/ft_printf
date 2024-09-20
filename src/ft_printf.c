@@ -11,16 +11,17 @@ static void	ft_constructor(t_format *tab)
 	tab->space = 0;
 }
 
-static void ft_setter(void *arg, int *index)
+static void	ft_setter(void *arg, int *index)
 {
-	bool *temp;
+	bool	*temp;
 
 	temp = arg;
 	*temp = 1;
 	*index = *index + 1;
 }
 
-static int ft_evaluate_alternate(t_format *tab, const char *input, int i, bool *pound)
+static int	ft_evaluate_alternate(t_format *tab, const char *input,
+				int i, bool *pound)
 {
 	if (input[i] == '#')
 		ft_setter(pound, &i);
@@ -49,17 +50,17 @@ static int ft_evaluate_alternate(t_format *tab, const char *input, int i, bool *
 	return (i);
 }
 
-static int	ft_evaluate(t_format *tab, const char* input, int i)
+static int	ft_evaluate(t_format *tab, const char *input, int i)
 {
 	bool	pound;
 
 	pound = false;
 	i++;
 	while (!ft_is_normal(input[i]) && !ft_is_alternate(input[i]))
-		i = ft_evaluate_alternate(tab,  input, i, &pound);
+		i = ft_evaluate_alternate(tab, input, i, &pound);
 	if (pound && ft_is_alternate(input[i]))
 		ft_alternate_conversion(tab, input[i]);
-	else 
+	else
 		ft_conversion(tab, input[i]);
 	return (i);
 }
@@ -67,8 +68,8 @@ static int	ft_evaluate(t_format *tab, const char* input, int i)
 int	ft_printf(const char *input, ...)
 {
 	t_format	tab;
-	int i;
-	
+	int			i;
+
 	tab.total = 0;
 	ft_constructor(&tab);
 	va_start(tab.arg, input);

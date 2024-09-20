@@ -1,6 +1,9 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# define HEXUP "0123456789ABCDEF"
+# define HEXLOW "'123456789abcdef"
+
 # include "libft.h"
 
 typedef struct s_format

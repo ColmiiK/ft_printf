@@ -1,12 +1,11 @@
 #include "../include/ft_printf.h"
 
-static void ft_resolve_number_dash(t_format *tab, long n, char *base, bool *is_negative)
+static void	ft_resolve_number_dash(t_format *tab, long n,
+									char *base, bool *is_negative)
 {
-	int len;
+	int	len;
 
 	len = digit_count(n, 10);
-	if ((tab->space || tab->sign) && !*is_negative)
-		tab->width--;
 	if (len > tab->precision)
 		tab->width -= len;
 	else
@@ -30,10 +29,9 @@ static void ft_resolve_number_dash(t_format *tab, long n, char *base, bool *is_n
 		tab->total += write(STDOUT_FILENO, " ", 1);
 }
 
-static void ft_resolve_number_width_aux(t_format *tab, long n, int len, bool *is_negative)
+static void	ft_resolve_number_width_aux(t_format *tab, long n,
+										int len, bool *is_negative)
 {
-	if ((tab->space || tab->sign) && !*is_negative)
-		tab->width--;
 	if (len > tab->precision && n)
 		tab->width -= len;
 	else if (n)
@@ -60,11 +58,14 @@ static void ft_resolve_number_width_aux(t_format *tab, long n, int len, bool *is
 	}
 }
 
-static void ft_resolve_number_width(t_format *tab, long n, char *base, bool *is_negative)
+static void	ft_resolve_number_width(t_format *tab, long n,
+									char *base, bool *is_negative)
 {
-	int len;
+	int	len;
 
 	len = digit_count(n, 10);
+	if ((tab->space || tab->sign) && !*is_negative)
+		tab->width--;
 	ft_resolve_number_width_aux(tab, n, len, is_negative);
 	while (--tab->width >= 0)
 		tab->total += write(STDOUT_FILENO, &tab->pad, 1);
@@ -83,9 +84,10 @@ static void ft_resolve_number_width(t_format *tab, long n, char *base, bool *is_
 		tab->total += ft_print_number(n, base);
 }
 
-static void ft_resolve_number_else(t_format *tab, long n, char *base, bool *is_negative)
+static void	ft_resolve_number_else(t_format *tab, long n,
+									char *base, bool *is_negative)
 {
-	int len;
+	int	len;
 
 	len = digit_count(n, 10);
 	if (tab->sign && !*is_negative)
@@ -102,9 +104,9 @@ static void ft_resolve_number_else(t_format *tab, long n, char *base, bool *is_n
 	tab->total += ft_print_number(n, base);
 }
 
-void ft_resolve_number(t_format *tab, long n, char *base)
+void	ft_resolve_number(t_format *tab, long n, char *base)
 {
-	bool is_negative;
+	bool	is_negative;
 
 	is_negative = false;
 	if (n < 0)
@@ -117,6 +119,9 @@ void ft_resolve_number(t_format *tab, long n, char *base)
 	else if (tab->width)
 		ft_resolve_number_width(tab, n, base, &is_negative);
 	else
+	{
+		if ((tab->space || tab->sign) && !is_negative)
+			tab->width--;
 		ft_resolve_number_else(tab, n, base, &is_negative);
+	}
 }
-

@@ -2,7 +2,7 @@
 
 static int	ft_print_string(char *str, int index)
 {
-	int total;
+	int	total;
 
 	total = 0;
 	while (*str && total < index)
@@ -10,7 +10,7 @@ static int	ft_print_string(char *str, int index)
 	return (total);
 }
 
-static void ft_resolve_string_dash(t_format *tab, char *str)
+static void	ft_resolve_string_dash(t_format *tab, char *str)
 {
 	if (tab->dot)
 		tab->total += ft_print_string(str, tab->precision);
@@ -24,7 +24,7 @@ static void ft_resolve_string_dash(t_format *tab, char *str)
 		tab->total += write(STDOUT_FILENO, " ", 1);
 }
 
-static void ft_resolve_string_width(t_format *tab, char *str)
+static void	ft_resolve_string_width(t_format *tab, char *str)
 {
 	if (tab->dot && tab->precision < (int)ft_strlen(str))
 		tab->width -= tab->precision;
@@ -38,7 +38,7 @@ static void ft_resolve_string_width(t_format *tab, char *str)
 		tab->total += ft_print_string(str, ft_strlen(str));
 }
 
-void ft_resolve_string(t_format *tab, char *str)
+void	ft_resolve_string(t_format *tab, char *str)
 {
 	if (!str)
 	{
@@ -55,7 +55,6 @@ void ft_resolve_string(t_format *tab, char *str)
 		if (tab->dot)
 			tab->total += ft_print_string(str, tab->precision);
 		else
-		 	tab->total += ft_print_string(str, ft_strlen(str));
+			tab->total += ft_print_string(str, ft_strlen(str));
 	}
 }
-

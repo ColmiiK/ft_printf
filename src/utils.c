@@ -2,7 +2,7 @@
 
 int	ft_print_number(long n, char *base)
 {
-	size_t len;
+	size_t	len;
 
 	len = ft_strlen(base);
 	if (n < 0 && len == 10)
@@ -17,7 +17,7 @@ int	ft_print_number(long n, char *base)
 bool	ft_is_normal(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
-			|| c == 'x' || c == 'X' || c == '%')
+		|| c == 'x' || c == 'X' || c == '%')
 		return (true);
 	return (false);
 }
@@ -30,16 +30,16 @@ bool	ft_is_alternate(char c)
 	return (false);
 }
 
-void ft_alternate_conversion(t_format *tab, char c)
+void	ft_alternate_conversion(t_format *tab, char c)
 {
 	if (c == 'o')
 		ft_resolve_octal(tab, va_arg(tab->arg, int));
 	else if (c == 'x' || c == 'X')
 	{
 		if (c == 'x')
-			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789abcdef", "0x");
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), HEXLOW, "0x");
 		else
-			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), "0123456789ABCDEF", "0X");
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), HEXUP, "0X");
 	}
 	else if (c == 'e' || c == 'E')
 	{
@@ -59,7 +59,7 @@ void ft_alternate_conversion(t_format *tab, char c)
 	}
 }
 
-void ft_conversion(t_format *tab, char c)
+void	ft_conversion(t_format *tab, char c)
 {
 	if (c == 'c')
 		ft_resolve_char(tab, va_arg(tab->arg, int));

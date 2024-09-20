@@ -19,48 +19,57 @@ static int	ft_print_float(double n, int precision)
 		if (digit < 0)
 			digit = -digit;
 		total += ft_print_number(digit, "0123456789");
-        if ((int)fractional < 0)
+		if ((int)fractional < 0)
 			digit *= -1;
 		fractional -= digit;
 	}
 	return (total);
 }
 
-void ft_resolve_float(t_format *tab, double n)
+static void	ft_resolve_float_dash(t_format *tab, double n)
 {
-	int len;
+	int	len;
 
 	len = digit_count((int)n, 10);
+	if (tab->dot)
+		tab->width -= tab->precision + len;
+	else
+		tab->width -= 6 + len;
+	if (tab->dot)
+		tab->total += ft_print_float(n, tab->precision);
+	else
+		tab->total += ft_print_float(n, 6);
+	while (--tab->width > 0)
+		tab->total += write(STDOUT_FILENO, " ", 1);
+}
+
+static void	ft_resolve_float_width(t_format *tab, double n)
+{
+	int	len;
+
+	len = digit_count((int)n, 10);
+	if (tab->dot)
+		tab->width -= tab->precision + len;
+	else
+		tab->width -= 6 + len;
+	while (--tab->width > 0)
+		tab->total += write(STDOUT_FILENO, " ", 1);
+	if (tab->dot)
+		tab->total += ft_print_float(n, tab->precision);
+	else
+		tab->total += ft_print_float(n, 6);
+}
+
+void	ft_resolve_float(t_format *tab, double n)
+{
 	if (tab->sign && n >= 0)
 		tab->total += write(STDOUT_FILENO, "+", 1);
 	else if (tab->space)
 		tab->total += write(STDOUT_FILENO, " ", 1);
 	if (tab->dash)
-	{
-		if (tab->dot)
-			tab->width -= tab->precision + len;
-		else
-		 	tab->width -= 6 + len;
-		if (tab->dot)
-			tab->total += ft_print_float(n, tab->precision);
-		else
-			tab->total += ft_print_float(n, 6);
-		while (--tab->width > 0)
-			tab->total += write(STDOUT_FILENO, " ", 1);
-	}
+		ft_resolve_float_dash(tab, n);
 	else if (tab->width)
-	{
-		if (tab->dot)
-			tab->width -= tab->precision + len;
-		else
-		 	tab->width -= 6 + len;
-		while (--tab->width > 0)
-			tab->total += write(STDOUT_FILENO, " ", 1);
-		if (tab->dot)
-			tab->total += ft_print_float(n, tab->precision);
-		else
-			tab->total += ft_print_float(n, 6);
-	}
+		ft_resolve_float_width(tab, n);
 	else
 	{
 		if (tab->dot)
