@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string.c                                           :+:      :+:    :+:   */
+/*   aux.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/20 19:32:42 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/09/20 19:32:42 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/09/23 11:31:12 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/09/23 11:31:14 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 
-static int	ft_print_string(char *str, int index)
+size_t	ft_strlen(char *str)
 {
-	int	total;
+	int	i;
 
-	total = 0;
-	while (*str && total < index)
-		total += write(STDOUT_FILENO, str++, 1);
-	return (total);
-}
-
-void	ft_resolve_string(t_format *tab, char *str)
-{
-	if (!str)
-		str = "(null)";
-	tab->total += ft_print_string(str, ft_strlen(str));
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

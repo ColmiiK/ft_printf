@@ -23,73 +23,7 @@ static int	ft_print_unsigned_number(unsigned int n, char *base)
 		+ ft_print_unsigned_number(n % len, base));
 }
 
-static void	ft_resolve_unsigned_number_dash(t_format *tab, unsigned int n,
-											char *base, int len)
-{
-	if (len > tab->precision)
-		tab->width -= len;
-	else
-		tab->width -= tab->precision;
-	tab->precision -= len - 1;
-	while (--tab->precision > 0)
-		tab->total += write(STDOUT_FILENO, "0", 1);
-	if (tab->dot && tab->precision < 0 && !n)
-		tab->width++;
-	else
-		tab->total += ft_print_unsigned_number(n, base);
-	while (--tab->width >= 0)
-		tab->total += write(STDOUT_FILENO, " ", 1);
-}
-
-static void	ft_resolve_unsigned_number_width(t_format *tab, unsigned int n,
-											char *base, int len)
-{
-	if (n && tab->pad == '0' && tab->dot)
-		tab->pad = ' ';
-	if (!n && tab->pad == '0')
-	{
-		tab->pad = ' ';
-		if (tab->dot)
-		{
-			tab->width++;
-			tab->precision++;
-		}
-	}
-	while (--tab->width >= 0)
-		tab->total += write(STDOUT_FILENO, &tab->pad, 1);
-	tab->precision -= len - 1;
-	while (--tab->precision > 0)
-		tab->total += write(STDOUT_FILENO, "0", 1);
-	if (tab->dot && tab->precision <= 0 && !n)
-		tab->width++;
-	else
-		tab->total += ft_print_unsigned_number(n, base);
-}
-
 void	ft_resolve_unsigned_number(t_format *tab, unsigned int n, char *base)
 {
-	int	len;
-
-	len = digit_count(n, 10);
-	if (tab->dash)
-		ft_resolve_unsigned_number_dash(tab, n, base, len);
-	else if (tab->width)
-	{
-		if (len > tab->precision && n)
-			tab->width -= len;
-		else if (n)
-			tab->width -= tab->precision;
-		else if (!n)
-			tab->width -= tab->precision + 1;
-		ft_resolve_unsigned_number_width(tab, n, base, len);
-	}
-	else
-	{
-		tab->precision -= len - 1;
-		while (--tab->precision > 0)
-			tab->total += write(STDOUT_FILENO, "0", 1);
-		if (tab->dot && tab->precision < 0 && !n)
-			return ;
-		tab->total += ft_print_unsigned_number(n, base);
-	}
+	tab->total += ft_print_unsigned_number(n, base);
 }

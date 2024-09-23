@@ -10,22 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft_printf.h"
-
-int	digit_count(long n, int base)
-{
-	int	i;
-
-	i = 0;
-	if (n <= 0)
-		i++;
-	while (n != 0)
-	{
-		n /= base;
-		i++;
-	}
-	return (i);
-}
+#include "../include/ft_printf_bonus.h"
 
 int	ft_print_number(long n, char *base)
 {
@@ -47,6 +32,43 @@ bool	ft_is_normal(char c)
 		|| c == 'x' || c == 'X' || c == '%')
 		return (true);
 	return (false);
+}
+
+bool	ft_is_alternate(char c)
+{
+	if (c == 'o' || c == 'e' || c == 'E' || c == 'f' || c == 'g' || c == 'G'
+		|| c == 'x' || c == 'X' || c == 'F')
+		return (true);
+	return (false);
+}
+
+void	ft_alternate_conversion(t_format *tab, char c)
+{
+	if (c == 'o')
+		ft_resolve_octal(tab, va_arg(tab->arg, int));
+	else if (c == 'x' || c == 'X')
+	{
+		if (c == 'x')
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), HEXLOW, "0x");
+		else
+			ft_resolve_alternate_hex(tab, va_arg(tab->arg, long), HEXUP, "0X");
+	}
+	else if (c == 'e' || c == 'E')
+	{
+		if (c == 'e')
+			ft_resolve_scientific(tab, va_arg(tab->arg, double), 'e');
+		else
+			ft_resolve_scientific(tab, va_arg(tab->arg, double), 'E');
+	}
+	else if (c == 'f' || c == 'F')
+		ft_resolve_float(tab, va_arg(tab->arg, double));
+	else if (c == 'g' || c == 'G')
+	{
+		if (c == 'g')
+			ft_resolve_smart(tab, va_arg(tab->arg, double), 'g');
+		else
+			ft_resolve_smart(tab, va_arg(tab->arg, double), 'G');
+	}
 }
 
 void	ft_conversion(t_format *tab, char c)

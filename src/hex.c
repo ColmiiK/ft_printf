@@ -23,78 +23,12 @@ static int	ft_print_unsigned_number(unsigned int n, char *base)
 		+ ft_print_unsigned_number(n % len, base));
 }
 
-static void	ft_resolve_hex_dash(t_format *tab, long n, char *base, int len)
+static void	ft_resolve_hex_else(t_format *tab, long n, char *base)
 {
-	if (len > tab->precision)
-		tab->width -= len;
-	else
-		tab->width -= tab->precision;
-	tab->precision -= len - 1;
-	while (--tab->precision > 0)
-		tab->total += write(STDOUT_FILENO, "0", 1);
-	if (tab->dot && tab->precision < 0 && !n)
-		tab->width++;
-	else
-		tab->total += ft_print_unsigned_number(n, base);
-	while (--tab->width >= 0)
-		tab->total += write(STDOUT_FILENO, " ", 1);
-}
-
-static void	ft_resolve_hex_width(t_format *tab, long n, char *base, int len)
-{
-	if (n && tab->pad == '0' && tab->dot)
-		tab->pad = ' ';
-	if (!n && tab->pad == '0')
-	{
-		tab->pad = ' ';
-		if (tab->dot)
-		{
-			tab->width++;
-			tab->precision++;
-		}
-	}
-	while (--tab->width >= 0)
-		tab->total += write(STDOUT_FILENO, &tab->pad, 1);
-	tab->precision -= len - 1;
-	while (--tab->precision > 0)
-		tab->total += write(STDOUT_FILENO, "0", 1);
-	if (tab->dot && tab->precision <= 0 && !n)
-		tab->width++;
-	else
-		tab->total += ft_print_unsigned_number(n, base);
-}
-
-static void	ft_resolve_hex_else(t_format *tab, long n, char *base, int len)
-{
-	tab->precision -= len - 1;
-	while (--tab->precision > 0)
-		tab->total += write(STDOUT_FILENO, "0", 1);
-	if (tab->dot && tab->precision < 0 && !n)
-		return ;
 	tab->total += ft_print_unsigned_number(n, base);
 }
 
 void	ft_resolve_hexadecimal(t_format *tab, long n, char *base)
 {
-	int	len;
-
-	len = digit_count(n, 16);
-	if (n == LONG_MAX || (unsigned long)n == ULONG_MAX)
-		len = 8;
-	if (n == LONG_MIN)
-		len = 1;
-	if (tab->dash)
-		ft_resolve_hex_dash(tab, n, base, len);
-	else if (tab->width)
-	{
-		if (len > tab->precision && n)
-			tab->width -= len;
-		else if (n)
-			tab->width -= tab->precision;
-		else if (!n)
-			tab->width -= tab->precision + 1;
-		ft_resolve_hex_width(tab, n, base, len);
-	}
-	else
-		ft_resolve_hex_else(tab, n, base, len);
+	ft_resolve_hex_else(tab, n, base);
 }
