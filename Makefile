@@ -26,7 +26,7 @@ WHITE = $(shell tput setaf 7)
 #Sources
 	
 SRC_FILES = ft_printf char string number unsigned_number hex pointer utils aux
-B_SRC_FILES = ft_printf char string number unsigned_number hex pointer octal alternate_hex scientific float smart utils 
+B_SRC_FILES = ft_printf char string number unsigned_number hex pointer octal alternate_hex scientific float smart utils aux
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 B_SRC = $(addprefix $(B_SRC_DIR), $(addsuffix _bonus.c, $(B_SRC_FILES)))
@@ -44,6 +44,7 @@ $(NAME):	$(OBJ)
 
 
 bonus:		$(B_OBJ)
+			@rm -f $(NAME)
 			@$(AR) $(NAME) $(B_OBJ)
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 

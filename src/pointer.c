@@ -27,6 +27,9 @@ void	ft_resolve_pointer(t_format *tab, long n, char *base)
 {
 	if (!n)
 		ft_resolve_string(tab, "(nil)");
-	tab->total += write(STDOUT_FILENO, "0x", 2);
-	tab->total += ft_print_unsigned_number(n, base);
+	else
+	{
+		tab->total += write(STDOUT_FILENO, "0x", 2);
+		tab->total += ft_print_unsigned_number(n, base);
+	}
 }

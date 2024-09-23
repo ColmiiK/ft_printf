@@ -69,4 +69,3 @@ int	digit_count(long n, int base)
 	}
 	return (i);
 }
-
